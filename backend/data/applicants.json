@@ -1,0 +1,22 @@
+[
+  {
+    "id": "11f0d38c-3034-4f7b-a053-a836ced2f523",
+    "userID": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "Arwin Clyde",
+    "email": "juan@email.com",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "rawText": "Experienced ICU nurse with 3 years of clinical experience in Metro Manila hospitals. Certified in Basic Life Support (BLS) and Advanced Cardiovascular Life Support (ACLS). Proficient in patient monitoring, IV therapy, and emergency response. Previously worked at Makati Medical Center and St. Luke's Medical Center.",
+    "extracted": {
+      "skills": [
+        "Extracted on Day 5"
+      ],
+      "experienceYears": 0,
+      "education": "",
+      "previousRoles": [],
+      "certifications": [],
+      "languages": []
+    },
+    "created_at": "2026-05-24T07:14:17.607Z"
+  }
+]

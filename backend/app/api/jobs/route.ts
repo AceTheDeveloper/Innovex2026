@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
 import path from "path";
 import mammoth from "mammoth";
 import { Job } from "@/app/intefaces/Jobs";
 import { extractText } from "unpdf";
+import { extractJobData } from "@/app/lib/gemini";
+import generateUUID from "@/app/helpers/generateUUID";
 
 const JOBS_PATH = path.join(process.cwd(), "data", "jobs.json");
 
@@ -60,7 +61,6 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
 
-    // Get fields
     const employerId = formData.get("employerId") as string;
     const title = formData.get("title") as string;
     const company = formData.get("company") as string;
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     }
 
     const newJob: Job = {
-      id: uuidv4(),
+      id: generateUUID(),
       employerId,
       title,
       company,
@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
       country,
       isOverseas,
       rawText,
-      extracted: mockExtract(rawText), // swap with Claude on Day 5
+      extracted: await extractJobData(rawText), // swap with Claude on Day 5
       createdAt: new Date().toISOString(),
     };
 

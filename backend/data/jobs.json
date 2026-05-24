@@ -18,5 +18,32 @@
       "salaryRange": null
     },
     "createdAt": "2026-05-24T05:29:52.623Z"
+  },
+  {
+    "id": "9ba6802f-61b1-4736-bcc8-c0e6ea8ed4e5",
+    "employerId": null,
+    "title": "ICU Nurse",
+    "company": "Makati Medical Center",
+    "location": "Makati, Philippines",
+    "country": "PH",
+    "isOverseas": false,
+    "rawText": "We are looking for a Registered Nurse with at least 2 years of ICU experience. Must be BLS and ACLS certified. Experience with patient monitoring systems is required. Knowledge of EMR systems is a plus. Must be willing to work on shifting schedules. Salary range: PHP 35,000 - 45,000 per month.",
+    "extracted": {
+      "requirements": [
+        "Registered Nurse",
+        "BLS certified",
+        "ACLS certified",
+        "Willing to work on shifting schedules"
+      ],
+      "niceToHave": [
+        "Knowledge of EMR systems"
+      ],
+      "experienceYears": 2,
+      "skills": [
+        "Patient monitoring systems"
+      ],
+      "salaryRange": "PHP 35,000 - 45,000 per month"
+    },
+    "createdAt": "2026-05-24T09:24:33.856Z"
   }
 ]
