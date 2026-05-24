@@ -1,20 +1,47 @@
 [
   {
-    "id": "uuid",
-    "name": "Arwin Clyde B. Simondac",
-    "email": "arbu.simondac.ui@phinmaed.com",
-    "password": "somepassword",
-    "role": "applicant",
+    "id": "employer-001",
+    "name": "Maria Santos",
+    "email": "maria@makatimedical.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "employer",
     "country": "PH",
-    "created_at": "2026-01-01"
+    "createdAt": "2026-01-01T00:00:00.000Z"
   },
   {
-    "id": "789be9a1-b37c-43ff-9ca7-1c753d3184ab",
-    "name": "Arwin Clyde B. Simondac",
-    "email": "ghostwrexker@gmail.com",
-    "password": "$2b$10$649.0qLyc8AqC94xVxASBeMPSwrCEUeHAYxPDLUdKmjRH6fXSg9fm",
+    "id": "employer-002",
+    "name": "Budi Santoso",
+    "email": "budi@rsjakarta.co.id",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "employer",
+    "country": "ID",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-001",
+    "name": "Juan dela Cruz",
+    "email": "juan@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
     "role": "applicant",
     "country": "PH",
-    "created_at": "2026-05-24"
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-002",
+    "name": "Ana Reyes",
+    "email": "ana@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-003",
+    "name": "Siti Rahayu",
+    "email": "siti@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "ID",
+    "createdAt": "2026-01-01T00:00:00.000Z"
   }
 ]

@@ -120,7 +120,41 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
-  const jobs = readJobs();
-  return NextResponse.json(jobs);
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const country = searchParams.get("country") as "PH" | "ID" | null;
+    const isOverseas = searchParams.get("isOverseas");
+    const search = searchParams.get("search");
+
+    let jobs = readJobs();
+
+    // Filter by country
+    if (country) {
+      jobs = jobs.filter((j) => j.country === country);
+    }
+
+    // Filter overseas or local
+    if (isOverseas !== null) {
+      jobs = jobs.filter((j) => j.isOverseas === (isOverseas === "true"));
+    }
+
+    // Search by title or company
+    if (search) {
+      const keyword = search.toLowerCase();
+      jobs = jobs.filter(
+        (j) =>
+          j.title.toLowerCase().includes(keyword) ||
+          j.company.toLowerCase().includes(keyword) ||
+          j.location.toLowerCase().includes(keyword),
+      );
+    }
+
+    return NextResponse.json({
+      total: jobs.length,
+      jobs,
+    });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

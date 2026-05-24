@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { Job } from "@/app/intefaces/Jobs";
 import { Applicants } from "@/app/intefaces/Applicants";
-import { matchApplicantsToJob } from "@/app/lib/gemini";
+import { analyzeGaps } from "@/app/lib/gemini";
 
 const JOBS_PATH = path.join(process.cwd(), "data", "jobs.json");
 const APPLICANTS_PATH = path.join(process.cwd(), "data", "applicants.json");
@@ -18,10 +18,24 @@ function readJSON<T>(filePath: string): T[] {
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
+    const applicantId = searchParams.get("applicantId");
     const jobId = searchParams.get("jobId");
 
-    if (!jobId) {
-      return NextResponse.json({ error: "jobId is required" }, { status: 400 });
+    if (!applicantId || !jobId) {
+      return NextResponse.json(
+        { error: "Both applicantId and jobId are required" },
+        { status: 400 },
+      );
+    }
+
+    const applicants = readJSON<Applicants>(APPLICANTS_PATH);
+    const applicant = applicants.find((a) => a.id === applicantId);
+
+    if (!applicant) {
+      return NextResponse.json(
+        { error: "Applicant not found" },
+        { status: 404 },
+      );
     }
 
     const jobs = readJSON<Job>(JOBS_PATH);
@@ -31,32 +45,19 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Job not found" }, { status: 404 });
     }
 
-    const applicants = readJSON<Applicants>(APPLICANTS_PATH);
-
-    if (applicants.length === 0) {
-      return NextResponse.json(
-        { error: "No applicants found" },
-        { status: 404 },
-      );
-    }
-
-    let filteredApplicants = applicants;
-    if (job.isOverseas) {
-      filteredApplicants = applicants.filter(
-        (a) => a.isOpenToOverseas === true,
-      );
-    }
-
-    const topMatches = await matchApplicantsToJob(job, filteredApplicants);
+    const analysis = await analyzeGaps(applicant, job);
 
     return NextResponse.json({
+      applicant: {
+        id: applicant.id,
+        name: applicant.name,
+      },
       job: {
         id: job.id,
         title: job.title,
         company: job.company,
       },
-      totalApplicants: applicants.length,
-      topMatches,
+      analysis,
     });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

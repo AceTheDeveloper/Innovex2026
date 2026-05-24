@@ -1,49 +1,210 @@
 [
   {
-    "id": "740a737e-6023-4548-984c-4160a6684f10",
-    "employerId": null,
-    "title": "nurse",
+    "id": "job-001",
+    "employerId": "employer-001",
+    "title": "ICU Nurse",
     "company": "Makati Medical Center",
     "location": "Makati, Philippines",
     "country": "PH",
     "isOverseas": false,
-    "rawText": "We are looking for an experienced ICU nurse with 2 years of experience...",
+    "rawText": "We are looking for a Registered Nurse with at least 2 years of ICU experience. Must be BLS and ACLS certified. Experience with patient monitoring systems is required. Knowledge of EMR systems is a plus. Salary range: PHP 35,000 - 45,000 per month.",
     "extracted": {
       "requirements": [
-        "Extracted on Day 5"
+        "Registered Nurse",
+        "2 years ICU experience",
+        "BLS certified",
+        "ACLS certified"
       ],
-      "niceToHave": [],
-      "experienceYears": 0,
-      "skills": [],
-      "salaryRange": null
+      "niceToHave": [
+        "EMR systems knowledge"
+      ],
+      "experienceYears": 2,
+      "skills": [
+        "ICU care",
+        "BLS",
+        "ACLS",
+        "patient monitoring"
+      ],
+      "salaryRange": "PHP 35,000 - 45,000 per month"
     },
-    "createdAt": "2026-05-24T05:29:52.623Z"
+    "createdAt": "2026-01-03T00:00:00.000Z"
   },
   {
-    "id": "9ba6802f-61b1-4736-bcc8-c0e6ea8ed4e5",
+    "id": "job-002",
+    "employerId": "employer-001",
+    "title": "Staff Nurse - Saudi Arabia",
+    "company": "Makati Medical Center (OFW Deployment)",
+    "location": "Riyadh, Saudi Arabia",
+    "country": "PH",
+    "isOverseas": true,
+    "rawText": "Seeking experienced nurses for deployment to Saudi Arabia. Must be a licensed Registered Nurse with at least 3 years hospital experience. NCLEX or HAAD certification is a plus. Tax-free salary of SAR 4,500 - 6,000 per month plus accommodation.",
+    "extracted": {
+      "requirements": [
+        "Registered Nurse",
+        "3 years hospital experience",
+        "Valid PRC license"
+      ],
+      "niceToHave": [
+        "NCLEX certification",
+        "HAAD certification"
+      ],
+      "experienceYears": 3,
+      "skills": [
+        "general nursing",
+        "patient care",
+        "clinical assessment"
+      ],
+      "salaryRange": "SAR 4,500 - 6,000 per month tax-free"
+    },
+    "createdAt": "2026-01-03T00:00:00.000Z"
+  },
+  {
+    "id": "job-003",
+    "employerId": "employer-002",
+    "title": "Perawat ICU",
+    "company": "RS Jakarta Pusat",
+    "location": "Jakarta, Indonesia",
+    "country": "ID",
+    "isOverseas": false,
+    "rawText": "Kami mencari perawat ICU berpengalaman dengan minimal 2 tahun pengalaman di unit perawatan intensif. Wajib memiliki sertifikat BLS dan ACLS. Gaji: IDR 8,000,000 - 12,000,000 per bulan.",
+    "extracted": {
+      "requirements": [
+        "Perawat terdaftar",
+        "2 tahun pengalaman ICU",
+        "Sertifikat BLS",
+        "Sertifikat ACLS"
+      ],
+      "niceToHave": [
+        "Pengalaman ventilator"
+      ],
+      "experienceYears": 2,
+      "skills": [
+        "ICU care",
+        "BLS",
+        "ACLS",
+        "perawatan intensif"
+      ],
+      "salaryRange": "IDR 8,000,000 - 12,000,000 per bulan"
+    },
+    "createdAt": "2026-01-03T00:00:00.000Z"
+  },
+  {
+    "id": "job-004",
+    "employerId": "employer-001",
+    "title": "Software Engineer",
+    "company": "TechPH Inc.",
+    "location": "BGC, Taguig",
+    "country": "PH",
+    "isOverseas": false,
+    "rawText": "Looking for a mid-level Software Engineer with 2-3 years experience in React and Node.js. TypeScript experience is required. Experience with REST APIs and PostgreSQL is a must. Salary: PHP 60,000 - 90,000.",
+    "extracted": {
+      "requirements": [
+        "2-3 years experience",
+        "React",
+        "Node.js",
+        "TypeScript",
+        "REST APIs",
+        "PostgreSQL"
+      ],
+      "niceToHave": [
+        "GraphQL",
+        "AWS experience",
+        "Docker"
+      ],
+      "experienceYears": 2,
+      "skills": [
+        "React",
+        "Node.js",
+        "TypeScript",
+        "PostgreSQL",
+        "REST APIs"
+      ],
+      "salaryRange": "PHP 60,000 - 90,000 per month"
+    },
+    "createdAt": "2026-01-03T00:00:00.000Z"
+  },
+  {
+    "id": "e46d5363-1294-4798-ba9f-66973b4f96bb",
     "employerId": null,
     "title": "ICU Nurse",
     "company": "Makati Medical Center",
     "location": "Makati, Philippines",
     "country": "PH",
     "isOverseas": false,
-    "rawText": "We are looking for a Registered Nurse with at least 2 years of ICU experience. Must be BLS and ACLS certified. Experience with patient monitoring systems is required. Knowledge of EMR systems is a plus. Must be willing to work on shifting schedules. Salary range: PHP 35,000 - 45,000 per month.",
+    "rawText": "We are looking for a Registered Nurse with at least 2 years of ICU experience. Must be BLS and ACLS certified. Experience with patient monitoring systems is required. Knowledge of EMR systems is a plus. Salary range: PHP 35,000 - 45,000 per month.",
     "extracted": {
       "requirements": [
         "Registered Nurse",
         "BLS certified",
         "ACLS certified",
-        "Willing to work on shifting schedules"
+        "2 years of ICU experience",
+        "Experience with patient monitoring systems"
       ],
       "niceToHave": [
         "Knowledge of EMR systems"
       ],
       "experienceYears": 2,
       "skills": [
-        "Patient monitoring systems"
+        "Patient monitoring systems",
+        "EMR systems",
+        "BLS",
+        "ACLS",
+        "ICU nursing"
       ],
       "salaryRange": "PHP 35,000 - 45,000 per month"
     },
-    "createdAt": "2026-05-24T09:24:33.856Z"
+    "createdAt": "2026-05-24T11:17:00.424Z"
+  },
+  {
+    "id": "88644f33-d8e9-44b3-8406-a1f5705035bb",
+    "employerId": null,
+    "title": "Staff Nurse - Saudi Arabia",
+    "company": "Makati Medical Center OFW Deployment",
+    "location": "Riyadh, Saudi Arabia",
+    "country": "PH",
+    "isOverseas": true,
+    "rawText": "Seeking experienced nurses for deployment to Saudi Arabia. Must be a licensed Registered Nurse with at least 3 years hospital experience. NCLEX or HAAD certification is a plus. Tax-free salary of SAR 4,500 - 6,000 per month plus accommodation.",
+    "extracted": {
+      "requirements": [
+        "Licensed Registered Nurse"
+      ],
+      "niceToHave": [
+        "NCLEX certification",
+        "HAAD certification"
+      ],
+      "experienceYears": 3,
+      "skills": [
+        "Nursing",
+        "Patient Care"
+      ],
+      "salaryRange": "SAR 4,500 - 6,000 per month plus accommodation"
+    },
+    "createdAt": "2026-05-24T11:17:23.327Z"
+  },
+  {
+    "id": "75483546-cb61-4174-a06e-fbece212d721",
+    "employerId": null,
+    "title": "Perawat ICU",
+    "company": "RS Jakarta Pusat",
+    "location": "Jakarta, Indonesia",
+    "country": "ID",
+    "isOverseas": false,
+    "rawText": "Kami mencari perawat ICU berpengalaman dengan minimal 2 tahun pengalaman di unit perawatan intensif. Wajib memiliki sertifikat BLS dan ACLS. Gaji IDR 8,000,000 - 12,000,000 per bulan.",
+    "extracted": {
+      "requirements": [
+        "Minimal 2 tahun pengalaman di unit perawatan intensif",
+        "Memiliki sertifikat BLS",
+        "Memiliki sertifikat ACLS"
+      ],
+      "niceToHave": [],
+      "experienceYears": 2,
+      "skills": [
+        "BLS",
+        "ACLS",
+        "ICU Nursing"
+      ],
+      "salaryRange": "IDR 8,000,000 - 12,000,000 per bulan"
+    },
+    "createdAt": "2026-05-24T11:17:46.389Z"
   }
 ]

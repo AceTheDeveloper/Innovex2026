@@ -1,22 +1,186 @@
 [
   {
-    "id": "11f0d38c-3034-4f7b-a053-a836ced2f523",
-    "userID": "123e4567-e89b-12d3-a456-426614174000",
-    "name": "Arwin Clyde",
+    "id": "profile-001",
+    "userId": "applicant-001",
+    "name": "Juan dela Cruz",
     "email": "juan@email.com",
     "country": "PH",
     "isOpenToOverseas": true,
-    "rawText": "Experienced ICU nurse with 3 years of clinical experience in Metro Manila hospitals. Certified in Basic Life Support (BLS) and Advanced Cardiovascular Life Support (ACLS). Proficient in patient monitoring, IV therapy, and emergency response. Previously worked at Makati Medical Center and St. Luke's Medical Center.",
+    "rawText": "Registered Nurse with 3 years of ICU experience at Makati Medical Center and St. Luke's Medical Center. BLS and ACLS certified. Skilled in patient monitoring, IV therapy, and emergency response. Proficient in EMR systems. Bachelor of Science in Nursing, University of Santo Tomas 2021.",
     "extracted": {
       "skills": [
-        "Extracted on Day 5"
+        "ICU care",
+        "BLS",
+        "ACLS",
+        "patient monitoring",
+        "IV therapy",
+        "EMR systems"
+      ],
+      "experienceYears": 3,
+      "education": "BSN, University of Santo Tomas 2021",
+      "previousRoles": [
+        "Staff Nurse",
+        "ICU Nurse"
+      ],
+      "certifications": [
+        "BLS",
+        "ACLS",
+        "PRC License"
+      ],
+      "languages": [
+        "English",
+        "Filipino"
+      ]
+    },
+    "createdAt": "2026-01-04T00:00:00.000Z"
+  },
+  {
+    "id": "profile-002",
+    "userId": "applicant-002",
+    "name": "Ana Reyes",
+    "email": "ana@email.com",
+    "country": "PH",
+    "isOpenToOverseas": false,
+    "rawText": "Fresh graduate Software Engineer with internship experience in React and Node.js. Built a capstone e-commerce project using TypeScript and PostgreSQL. Familiar with REST APIs and Git. Bachelor of Science in Computer Science, DLSU 2025.",
+    "extracted": {
+      "skills": [
+        "React",
+        "Node.js",
+        "TypeScript",
+        "PostgreSQL",
+        "REST APIs",
+        "Git"
       ],
       "experienceYears": 0,
-      "education": "",
-      "previousRoles": [],
+      "education": "BSCS, De La Salle University 2025",
+      "previousRoles": [
+        "Software Engineer Intern"
+      ],
       "certifications": [],
+      "languages": [
+        "English",
+        "Filipino"
+      ]
+    },
+    "createdAt": "2026-01-04T00:00:00.000Z"
+  },
+  {
+    "id": "profile-003",
+    "userId": "applicant-003",
+    "name": "Siti Rahayu",
+    "email": "siti@email.com",
+    "country": "ID",
+    "isOpenToOverseas": false,
+    "rawText": "Perawat terdaftar dengan 4 tahun pengalaman di ICU RS Cipto Mangunkusumo Jakarta. Bersertifikat BLS dan ACLS. Berpengalaman dalam penggunaan ventilator dan monitoring pasien kritis. Lulusan S1 Keperawatan Universitas Indonesia 2020.",
+    "extracted": {
+      "skills": [
+        "ICU care",
+        "BLS",
+        "ACLS",
+        "ventilator",
+        "patient monitoring",
+        "perawatan intensif"
+      ],
+      "experienceYears": 4,
+      "education": "S1 Keperawatan, Universitas Indonesia 2020",
+      "previousRoles": [
+        "Perawat ICU",
+        "Perawat Kritis"
+      ],
+      "certifications": [
+        "BLS",
+        "ACLS",
+        "STR Perawat"
+      ],
+      "languages": [
+        "Bahasa Indonesia",
+        "English"
+      ]
+    },
+    "createdAt": "2026-01-04T00:00:00.000Z"
+  },
+  {
+    "id": "e5a5a75d-3fe5-4c25-81c1-948659a288a2",
+    "userID": "applicant-001",
+    "name": "Juan dela Cruz",
+    "email": "juan@email.com",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "rawText": "Registered Nurse with 3 years of ICU experience at Makati Medical Center and St. Lukes Medical Center. BLS and ACLS certified. Skilled in patient monitoring IV therapy and emergency response. Proficient in EMR systems. Bachelor of Science in Nursing University of Santo Tomas 2021.",
+    "extracted": {
+      "skills": [
+        "patient monitoring",
+        "IV therapy",
+        "emergency response",
+        "EMR systems"
+      ],
+      "experienceYears": 3,
+      "education": "Bachelor of Science in Nursing",
+      "previousRoles": [
+        "Registered Nurse"
+      ],
+      "certifications": [
+        "BLS",
+        "ACLS"
+      ],
       "languages": []
     },
-    "created_at": "2026-05-24T07:14:17.607Z"
+    "created_at": "2026-05-24T11:18:36.751Z"
+  },
+  {
+    "id": "0c48ddab-d6e6-46b5-a37d-57311cdab312",
+    "userID": "applicant-002",
+    "name": "Ana Reyes",
+    "email": "ana@email.com",
+    "country": "PH",
+    "isOpenToOverseas": false,
+    "rawText": "Fresh graduate Software Engineer with internship experience in React and Node.js. Built a capstone e-commerce project using TypeScript and PostgreSQL. Familiar with REST APIs and Git. Bachelor of Science in Computer Science DLSU 2025.",
+    "extracted": {
+      "skills": [
+        "React",
+        "Node.js",
+        "TypeScript",
+        "PostgreSQL",
+        "REST APIs",
+        "Git"
+      ],
+      "experienceYears": 0,
+      "education": "Bachelor of Science in Computer Science",
+      "previousRoles": [],
+      "certifications": [],
+      "languages": [
+        "English"
+      ]
+    },
+    "created_at": "2026-05-24T11:19:06.810Z"
+  },
+  {
+    "id": "3f645542-4359-4aea-9ffe-09bc8e285acb",
+    "userID": "applicant-003",
+    "name": "Siti Rahayu",
+    "email": "siti@email.com",
+    "country": "ID",
+    "isOpenToOverseas": false,
+    "rawText": "Perawat terdaftar dengan 4 tahun pengalaman di ICU RS Cipto Mangunkusumo Jakarta. Bersertifikat BLS dan ACLS. Berpengalaman dalam penggunaan ventilator dan monitoring pasien kritis. Lulusan S1 Keperawatan Universitas Indonesia 2020.",
+    "extracted": {
+      "skills": [
+        "Ventilator use",
+        "Critical patient monitoring",
+        "ICU Nursing"
+      ],
+      "experienceYears": 4,
+      "education": "Bachelor's Degree in Nursing",
+      "previousRoles": [
+        "Registered Nurse"
+      ],
+      "certifications": [
+        "BLS",
+        "ACLS"
+      ],
+      "languages": [
+        "Indonesian"
+      ]
+    },
+    "created_at": "2026-05-24T11:19:33.991Z"
   }
 ]

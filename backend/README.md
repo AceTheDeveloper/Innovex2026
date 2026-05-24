@@ -17,8 +17,10 @@
   - [Jobs](#jobs)
   - [Applicants](#applicants)
   - [Matching](#matching)
+  - [Gap Analysis](#gap-analysis)
 - [AI Extraction](#ai-extraction)
 - [How Matching Works](#how-matching-works)
+- [Postman Payloads](#postman-payloads)
 - [Demo Seed Data](#demo-seed-data)
 
 ---
@@ -33,8 +35,9 @@ JobMatch AI is a mobile-first job matching platform that uses AI to intelligentl
 - Applicant resume upload with AI-powered structured extraction
 - Semantic job-applicant matching with explainable scores
 - Two-way matching: employer finds applicants, applicant finds jobs
-- Gap analysis — tells applicants what skills they're missing per job
+- Detailed gap analysis with upskilling suggestions
 - OFW / overseas job filtering for Philippine applicants
+- Keyword search and country filtering on job listings
 - Localized context for both PH and Indonesian labor markets
 
 ---
@@ -60,28 +63,34 @@ backend/
 ├── app/
 │   ├── api/
 │   │   ├── auth/
-│   │   │   ├── register/route.ts     # POST /api/auth/register
-│   │   │   └── login/route.ts        # POST /api/auth/login
+│   │   │   ├── register/route.ts         # POST /api/auth/register
+│   │   │   └── login/route.ts            # POST /api/auth/login
 │   │   ├── jobs/
-│   │   │   └── route.ts              # POST /api/jobs, GET /api/jobs
+│   │   │   ├── route.ts                  # POST /api/jobs, GET /api/jobs
+│   │   │   └── [id]/route.ts             # GET /api/jobs/:id
 │   │   ├── applicants/
-│   │   │   └── resume/route.ts       # POST /api/applicants/resume, GET /api/applicants/resume
-│   │   └── match/
-│   │       ├── employer/route.ts     # GET /api/match/employer?jobId=
-│   │       └── applicant/route.ts    # GET /api/match/applicant?applicantId=
+│   │   │   ├── resume/route.ts           # POST /api/applicants/resume, GET /api/applicants/resume
+│   │   │   └── [id]/route.ts             # GET /api/applicants/:id
+│   │   ├── match/
+│   │   │   ├── employer/route.ts         # GET /api/match/employer?jobId=
+│   │   │   └── applicant/route.ts        # GET /api/match/applicant?applicantId=
+│   │   └── gap/
+│   │       └── route.ts                  # GET /api/gap?applicantId=&jobId=
 │   ├── lib/
-│   │   ├── gemini.ts                 # AI extraction + matching functions
-│   │   └── auth.ts                   # JWT sign + verify helpers
+│   │   ├── gemini.ts                     # AI extraction + matching functions
+│   │   ├── auth.ts                       # JWT sign + verify helpers
+│   │   ├── db.ts                         # JSON read/write helpers
+│   │   └── getUser.ts                    # Auth middleware helper
 │   ├── helpers/
-│   │   └── generateUUID.ts           # UUID generation
+│   │   └── generateUUID.ts               # UUID generation
 │   └── intefaces/
-│       ├── Jobs.ts                   # Job + JobExtracted types
-│       └── Applicants.ts             # Applicant + ApplicantExtracted types
+│       ├── Jobs.ts                       # Job + JobExtracted types
+│       └── Applicants.ts                 # Applicant + ApplicantExtracted types
 ├── data/
-│   ├── users.json                    # Registered users
-│   ├── jobs.json                     # Posted jobs
-│   └── applicants.json               # Applicant profiles
-├── .env.local                        # Environment variables
+│   ├── users.json                        # Registered users
+│   ├── jobs.json                         # Posted jobs
+│   └── applicants.json                   # Applicant profiles
+├── .env.local                            # Environment variables
 └── README.md
 ```
 
@@ -201,11 +210,45 @@ JWT_SECRET=your_super_secret_jwt_key_here
 }
 ```
 
+### Match Result
+
+```typescript
+{
+  applicantId | jobId: string
+  name | title: string
+  matchScore: number        // 0 to 100
+  reason: string            // plain language explanation
+  gaps: string[]            // missing skills or qualifications
+}
+```
+
+### Gap Analysis
+
+```typescript
+{
+  overallMatch: number
+  strengths: string[]
+  gaps: {
+    skill: string
+    importance: "critical" | "moderate" | "minor"
+    suggestion: string
+  }[]
+  upskilling: {
+    resource: string
+    provider: string
+    reason: string
+  }[]
+  verdict: string
+}
+```
+
 ---
 
 ## API Reference
 
-> All protected routes require: `Authorization: Bearer <token>`
+> 🔒 Protected routes require: `Authorization: Bearer <token>`
+>
+> Get your token from `POST /api/login`
 
 ---
 
@@ -214,7 +257,7 @@ JWT_SECRET=your_super_secret_jwt_key_here
 #### Register
 
 ```
-POST /api/auth/register
+POST /api/register
 Content-Type: application/json
 ```
 
@@ -224,11 +267,19 @@ Content-Type: application/json
 {
   "name": "Juan dela Cruz",
   "email": "juan@email.com",
-  "password": "password123",
+  "password": "password",
   "role": "applicant",
   "country": "PH"
 }
 ```
+
+| Field      | Type   | Required | Values                    |
+| ---------- | ------ | -------- | ------------------------- |
+| `name`     | string | ✅       | Full name                 |
+| `email`    | string | ✅       | Valid email               |
+| `password` | string | ✅       | Min 6 characters          |
+| `role`     | string | ✅       | `applicant` or `employer` |
+| `country`  | string | ✅       | `PH` or `ID`              |
 
 **Response `201`:**
 
@@ -240,7 +291,8 @@ Content-Type: application/json
     "name": "Juan dela Cruz",
     "email": "juan@email.com",
     "role": "applicant",
-    "country": "PH"
+    "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
   }
 }
 ```
@@ -250,7 +302,7 @@ Content-Type: application/json
 #### Login
 
 ```
-POST /api/auth/login
+POST /api/login
 Content-Type: application/json
 ```
 
@@ -259,7 +311,7 @@ Content-Type: application/json
 ```json
 {
   "email": "juan@email.com",
-  "password": "password123"
+  "password": "password"
 }
 ```
 
@@ -272,19 +324,19 @@ Content-Type: application/json
 }
 ```
 
+> Save the `token` — you'll need it in the `Authorization` header for all protected routes.
+
 ---
 
 ### Jobs
 
-#### Post a Job
+#### Post a Job 🔒
 
 ```
 POST /api/jobs
 Authorization: Bearer <token>
 Content-Type: multipart/form-data
 ```
-
-**Form Fields:**
 
 | Field        | Type   | Required | Description                                   |
 | ------------ | ------ | -------- | --------------------------------------------- |
@@ -294,7 +346,7 @@ Content-Type: multipart/form-data
 | `country`    | string | ✅       | `PH` or `ID`                                  |
 | `isOverseas` | string | ✅       | `"true"` or `"false"`                         |
 | `text`       | string | ⚠️       | Job description as text (required if no file) |
-| `file`       | File   | ⚠️       | `.pdf` or `.docx` file (required if no text)  |
+| `file`       | File   | ⚠️       | `.pdf` or `.docx` (required if no text)       |
 
 **Response `201`:**
 
@@ -324,19 +376,52 @@ Content-Type: multipart/form-data
 
 ---
 
-#### Get All Jobs
+#### Get All Jobs (with filters)
 
 ```
 GET /api/jobs
+GET /api/jobs?country=PH
+GET /api/jobs?country=PH&isOverseas=false
+GET /api/jobs?search=nurse
+GET /api/jobs?country=PH&isOverseas=true&search=nurse
 ```
 
-**Response `200`:** Array of all job objects.
+| Query Param  | Type   | Description                                |
+| ------------ | ------ | ------------------------------------------ |
+| `country`    | string | Filter by `PH` or `ID`                     |
+| `isOverseas` | string | `"true"` for overseas, `"false"` for local |
+| `search`     | string | Search by title, company, or location      |
+
+**Response `200`:**
+
+```json
+{
+  "total": 3,
+  "jobs": [ ...array of job objects ]
+}
+```
+
+---
+
+#### Get Single Job
+
+```
+GET /api/jobs/:id
+```
+
+**Response `200`:** Single job object.
+
+**Response `404`:**
+
+```json
+{ "error": "Job not found" }
+```
 
 ---
 
 ### Applicants
 
-#### Upload Resume
+#### Upload Resume 🔒
 
 ```
 POST /api/applicants/resume
@@ -344,17 +429,15 @@ Authorization: Bearer <token>
 Content-Type: multipart/form-data
 ```
 
-**Form Fields:**
-
-| Field              | Type   | Required | Description                                  |
-| ------------------ | ------ | -------- | -------------------------------------------- |
-| `userId`           | string | ✅       | User ID from auth                            |
-| `name`             | string | ✅       | Applicant full name                          |
-| `email`            | string | ✅       | Applicant email                              |
-| `country`          | string | ✅       | `PH` or `ID`                                 |
-| `isOpenToOverseas` | string | ✅       | `"true"` or `"false"`                        |
-| `text`             | string | ⚠️       | Resume as text (required if no file)         |
-| `file`             | File   | ⚠️       | `.pdf` or `.docx` file (required if no text) |
+| Field              | Type   | Required | Description                             |
+| ------------------ | ------ | -------- | --------------------------------------- |
+| `userId`           | string | ✅       | User ID from auth                       |
+| `name`             | string | ✅       | Applicant full name                     |
+| `email`            | string | ✅       | Applicant email                         |
+| `country`          | string | ✅       | `PH` or `ID`                            |
+| `isOpenToOverseas` | string | ✅       | `"true"` or `"false"`                   |
+| `text`             | string | ⚠️       | Resume as text (required if no file)    |
+| `file`             | File   | ⚠️       | `.pdf` or `.docx` (required if no text) |
 
 > If the same `userId` uploads again, their profile is **updated** not duplicated.
 
@@ -375,7 +458,7 @@ Content-Type: multipart/form-data
       "experienceYears": 3,
       "education": "BSN, University of Santo Tomas 2021",
       "previousRoles": ["Staff Nurse", "ICU Nurse"],
-      "certifications": ["BLS", "ACLS"],
+      "certifications": ["BLS", "ACLS", "PRC License"],
       "languages": ["English", "Filipino"]
     },
     "createdAt": "2026-01-04T00:00:00.000Z"
@@ -395,20 +478,36 @@ GET /api/applicants/resume
 
 ---
 
+#### Get Single Applicant
+
+```
+GET /api/applicants/:id
+```
+
+**Response `200`:** Single applicant object.
+
+**Response `404`:**
+
+```json
+{ "error": "Applicant not found" }
+```
+
+---
+
 ### Matching
 
-#### Employer — Find Best Applicants for a Job
+#### Employer — Find Best Applicants for a Job 🔒
 
 ```
 GET /api/match/employer?jobId=<jobId>
 Authorization: Bearer <token>
 ```
 
-**Query Params:**
+| Query Param | Required | Description                    |
+| ----------- | -------- | ------------------------------ |
+| `jobId`     | ✅       | ID of the job to match against |
 
-| Param   | Required | Description                    |
-| ------- | -------- | ------------------------------ |
-| `jobId` | ✅       | ID of the job to match against |
+> If the job is overseas, only applicants with `isOpenToOverseas: true` are considered.
 
 **Response `200`:**
 
@@ -425,7 +524,7 @@ Authorization: Bearer <token>
       "applicantId": "uuid",
       "name": "Juan dela Cruz",
       "matchScore": 92,
-      "reason": "Juan has 3 years of ICU experience which directly matches the role. His BLS and ACLS certifications are explicitly required. His EMR proficiency is a strong bonus.",
+      "reason": "Juan has 3 years of ICU experience which directly matches the role. His BLS and ACLS certifications are explicitly required.",
       "gaps": ["Shifting schedule experience not mentioned in resume"]
     }
   ]
@@ -434,18 +533,18 @@ Authorization: Bearer <token>
 
 ---
 
-#### Applicant — Find Best Jobs for an Applicant
+#### Applicant — Find Best Jobs 🔒
 
 ```
 GET /api/match/applicant?applicantId=<applicantId>
 Authorization: Bearer <token>
 ```
 
-**Query Params:**
-
-| Param         | Required | Description                          |
+| Query Param   | Required | Description                          |
 | ------------- | -------- | ------------------------------------ |
 | `applicantId` | ✅       | ID of the applicant to match against |
+
+> If the applicant has `isOpenToOverseas: false`, overseas jobs are automatically excluded.
 
 **Response `200`:**
 
@@ -472,6 +571,61 @@ Authorization: Bearer <token>
 
 ---
 
+### Gap Analysis
+
+#### Analyze Skill Gaps Between Applicant and Job 🔒
+
+```
+GET /api/gap?applicantId=<applicantId>&jobId=<jobId>
+Authorization: Bearer <token>
+```
+
+| Query Param   | Required | Description         |
+| ------------- | -------- | ------------------- |
+| `applicantId` | ✅       | ID of the applicant |
+| `jobId`       | ✅       | ID of the job       |
+
+**Response `200`:**
+
+```json
+{
+  "applicant": {
+    "id": "uuid",
+    "name": "Juan dela Cruz"
+  },
+  "job": {
+    "id": "uuid",
+    "title": "ICU Nurse",
+    "company": "Makati Medical Center"
+  },
+  "analysis": {
+    "overallMatch": 88,
+    "strengths": [
+      "3 years of direct ICU experience",
+      "BLS and ACLS certified as required",
+      "EMR proficiency is a strong bonus"
+    ],
+    "gaps": [
+      {
+        "skill": "Shifting schedule experience",
+        "importance": "moderate",
+        "suggestion": "Highlight any night shift or rotating schedule experience in resume"
+      }
+    ],
+    "upskilling": [
+      {
+        "resource": "Critical Care Nursing Course",
+        "provider": "TESDA",
+        "reason": "Strengthens ICU competency and adds a formal certification"
+      }
+    ],
+    "verdict": "Juan is a strong candidate and should apply immediately with minor resume improvements."
+  }
+}
+```
+
+---
+
 ## AI Extraction
 
 All document processing is handled by **Google Gemini 2.5 Flash** via `/app/lib/gemini.ts`.
@@ -484,6 +638,7 @@ All document processing is handled by **Google Gemini 2.5 Flash** via `/app/lib/
 | `extractResumeData(rawText)`            | Raw resume text        | Structured `ApplicantExtracted` object |
 | `matchApplicantsToJob(job, applicants)` | Job + applicants array | Top 5 ranked applicants with scores    |
 | `matchJobsToApplicant(applicant, jobs)` | Applicant + jobs array | Top 5 ranked jobs with scores          |
+| `analyzeGaps(applicant, job)`           | Applicant + job        | Detailed gap analysis with upskilling  |
 
 ### Supported File Types
 
@@ -494,60 +649,303 @@ All document processing is handled by **Google Gemini 2.5 Flash** via `/app/lib/
 
 ## How Matching Works
 
-1. **Extraction** — When a JD or resume is uploaded, Gemini extracts structured data (skills, experience, requirements) and saves it alongside the raw text in JSON.
-
-2. **Matching** — When a match is requested, the extracted profiles of both the job and applicants/jobs are sent to Gemini with a structured prompt.
-
-3. **Scoring** — Gemini returns a match score (0–100), a plain-language reason, and a list of gaps for each match.
-
-4. **Ranking** — Results are sorted by score descending, top 5 returned.
-
 ```
 Employer requests match for Job A
         ↓
-Load Job A extracted data
+Load Job A extracted data from jobs.json
         ↓
-Load all applicant extracted profiles
+Load all applicants from applicants.json
+Filter: overseas jobs → only open-to-overseas applicants
         ↓
-Send both to Gemini with ranking prompt
+Send job + applicants to Gemini with ranking prompt
         ↓
-Gemini returns top 5 ranked applicants with scores + gaps
+Gemini returns top 5 ranked applicants
+with match scores, reasons, and gaps
         ↓
-Return to employer
+Return shortlist to employer
+
+─────────────────────────────────────
+
+Applicant requests job recommendations
+        ↓
+Load applicant profile from applicants.json
+        ↓
+Load all jobs from jobs.json
+Filter: not open to overseas → exclude overseas jobs
+        ↓
+Send applicant + jobs to Gemini with ranking prompt
+        ↓
+Gemini returns top 5 recommended jobs
+with match scores, reasons, and gaps
+        ↓
+Return recommendations to applicant
+```
+
+---
+
+## Postman Payloads
+
+### Auth — Register Employer
+
+```
+POST http://localhost:3000/api/register
+Body → raw → JSON
+```
+
+```json
+{
+  "name": "Maria Santos",
+  "email": "maria@makatimedical.com",
+  "password": "password",
+  "role": "employer",
+  "country": "PH"
+}
+```
+
+### Auth — Register Applicant
+
+```
+POST http://localhost:3000/api/register
+Body → raw → JSON
+```
+
+```json
+{
+  "name": "Juan dela Cruz",
+  "email": "juan@email.com",
+  "password": "password",
+  "role": "applicant",
+  "country": "PH"
+}
+```
+
+### Auth — Login
+
+```
+POST http://localhost:3000/api/login
+Body → raw → JSON
+```
+
+```json
+{
+  "email": "maria@makatimedical.com",
+  "password": "password"
+}
+```
+
+### Jobs — Post Local Job (bulk edit)
+
+```
+POST http://localhost:3000/api/jobs
+Authorization: Bearer <token>
+Body → form-data → bulk edit
+```
+
+```
+title:ICU Nurse
+company:Makati Medical Center
+location:Makati, Philippines
+country:PH
+isOverseas:false
+text:We are looking for a Registered Nurse with at least 2 years of ICU experience. Must be BLS and ACLS certified. Experience with patient monitoring systems is required. Knowledge of EMR systems is a plus. Salary range: PHP 35,000 - 45,000 per month.
+```
+
+### Jobs — Post Overseas Job (bulk edit)
+
+```
+POST http://localhost:3000/api/jobs
+Authorization: Bearer <token>
+Body → form-data → bulk edit
+```
+
+```
+title:Staff Nurse - Saudi Arabia
+company:Makati Medical Center OFW Deployment
+location:Riyadh, Saudi Arabia
+country:PH
+isOverseas:true
+text:Seeking experienced nurses for deployment to Saudi Arabia. Must be a licensed Registered Nurse with at least 3 years hospital experience. NCLEX or HAAD certification is a plus. Tax-free salary of SAR 4,500 - 6,000 per month plus accommodation.
+```
+
+### Jobs — Post Indonesian Job (bulk edit)
+
+```
+POST http://localhost:3000/api/jobs
+Authorization: Bearer <token>
+Body → form-data → bulk edit
+```
+
+```
+title:Perawat ICU
+company:RS Jakarta Pusat
+location:Jakarta, Indonesia
+country:ID
+isOverseas:false
+text:Kami mencari perawat ICU berpengalaman dengan minimal 2 tahun pengalaman di unit perawatan intensif. Wajib memiliki sertifikat BLS dan ACLS. Gaji IDR 8,000,000 - 12,000,000 per bulan.
+```
+
+### Applicants — Upload Resume Juan (bulk edit)
+
+```
+POST http://localhost:3000/api/applicants/resume
+Authorization: Bearer <token>
+Body → form-data → bulk edit
+```
+
+```
+userId:applicant-001
+name:Juan dela Cruz
+email:juan@email.com
+country:PH
+isOpenToOverseas:true
+text:Registered Nurse with 3 years of ICU experience at Makati Medical Center and St. Lukes Medical Center. BLS and ACLS certified. Skilled in patient monitoring IV therapy and emergency response. Proficient in EMR systems. Bachelor of Science in Nursing University of Santo Tomas 2021.
+```
+
+### Applicants — Upload Resume Ana (bulk edit)
+
+```
+POST http://localhost:3000/api/applicants/resume
+Authorization: Bearer <token>
+Body → form-data → bulk edit
+```
+
+```
+userId:applicant-002
+name:Ana Reyes
+email:ana@email.com
+country:PH
+isOpenToOverseas:false
+text:Fresh graduate Software Engineer with internship experience in React and Node.js. Built a capstone e-commerce project using TypeScript and PostgreSQL. Familiar with REST APIs and Git. Bachelor of Science in Computer Science DLSU 2025.
+```
+
+### Applicants — Upload Resume Siti (bulk edit)
+
+```
+POST http://localhost:3000/api/applicants/resume
+Authorization: Bearer <token>
+Body → form-data → bulk edit
+```
+
+```
+userId:applicant-003
+name:Siti Rahayu
+email:siti@email.com
+country:ID
+isOpenToOverseas:false
+text:Perawat terdaftar dengan 4 tahun pengalaman di ICU RS Cipto Mangunkusumo Jakarta. Bersertifikat BLS dan ACLS. Berpengalaman dalam penggunaan ventilator dan monitoring pasien kritis. Lulusan S1 Keperawatan Universitas Indonesia 2020.
+```
+
+### Matching — Employer
+
+```
+GET http://localhost:3000/api/match/employer?jobId=<job_id>
+Authorization: Bearer <token>
+```
+
+### Matching — Applicant
+
+```
+GET http://localhost:3000/api/match/applicant?applicantId=<applicant_id>
+Authorization: Bearer <token>
+```
+
+### Gap Analysis
+
+```
+GET http://localhost:3000/api/gap?applicantId=<applicant_id>&jobId=<job_id>
+Authorization: Bearer <token>
+```
+
+### Filter Jobs
+
+```
+GET http://localhost:3000/api/jobs?country=PH&isOverseas=false
+GET http://localhost:3000/api/jobs?country=PH&isOverseas=true
+GET http://localhost:3000/api/jobs?country=ID
+GET http://localhost:3000/api/jobs?search=nurse
+GET http://localhost:3000/api/jobs?country=PH&isOverseas=true&search=nurse
 ```
 
 ---
 
 ## Demo Seed Data
 
-To quickly populate the app for demo purposes, paste these into your JSON files:
+Paste directly into your JSON files for quick demo setup.
 
 ### `data/users.json`
 
 ```json
 [
   {
-    "id": "user-employer-001",
+    "id": "employer-001",
     "name": "Maria Santos",
     "email": "maria@makatimedical.com",
-    "password": "$2b$10$hashedpassword",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
     "role": "employer",
     "country": "PH",
     "createdAt": "2026-01-01T00:00:00.000Z"
   },
   {
-    "id": "user-applicant-001",
+    "id": "employer-002",
+    "name": "Budi Santoso",
+    "email": "budi@rsjakarta.co.id",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "employer",
+    "country": "ID",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-001",
     "name": "Juan dela Cruz",
     "email": "juan@email.com",
-    "password": "$2b$10$hashedpassword",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
     "role": "applicant",
     "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-002",
+    "name": "Ana Reyes",
+    "email": "ana@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-003",
+    "name": "Siti Rahayu",
+    "email": "siti@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "ID",
     "createdAt": "2026-01-01T00:00:00.000Z"
   }
 ]
 ```
 
-> For demo, register users properly via `/api/auth/register` so passwords are correctly hashed.
+> All passwords are `password` — easy for demo! 😄
+
+---
+
+## Final Demo Checklist
+
+```
+✅ npm run dev runs without errors
+✅ POST /api/register works for employer + applicant
+✅ POST /api/login returns token
+✅ POST /api/jobs creates job with AI-extracted data
+✅ POST /api/applicants/resume creates profile with AI-extracted data
+✅ GET /api/jobs returns all jobs
+✅ GET /api/jobs?country=PH&isOverseas=true filters correctly
+✅ GET /api/jobs?search=nurse searches correctly
+✅ GET /api/jobs/:id returns single job
+✅ GET /api/applicants/:id returns single applicant
+✅ GET /api/match/employer?jobId= returns top 5 ranked applicants
+✅ GET /api/match/applicant?applicantId= returns top 5 job recommendations
+✅ GET /api/gap?applicantId=&jobId= returns detailed gap analysis
+✅ data/users.json, jobs.json, applicants.json have seed data
+```
 
 ---
 

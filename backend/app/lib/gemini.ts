@@ -201,3 +201,67 @@ export async function matchJobsToApplicant(
     return JSON.parse(cleaned);
   }
 }
+
+export async function analyzeGaps(
+  applicant: Applicant,
+  job: Job,
+): Promise<any> {
+  const prompt = `
+    You are an expert career counselor. Analyze the gap between an applicant's profile and a job requirement.
+
+    Return ONLY a valid JSON object with no markdown, no backticks, no explanation. Just raw JSON.
+
+    Required format:
+    {
+      "overallMatch": <number from 0 to 100>,
+      "strengths": [
+        "<specific strength relevant to this job>"
+      ],
+      "gaps": [
+        {
+          "skill": "<missing skill or qualification>",
+          "importance": "critical" | "moderate" | "minor",
+          "suggestion": "<specific course, certification, or action to close this gap>"
+        }
+      ],
+      "upskilling": [
+        {
+          "resource": "<course or certification name>",
+          "provider": "<Coursera, TESDA, LinkedIn Learning, etc>",
+          "reason": "<why this specifically helps for this job>"
+        }
+      ],
+      "verdict": "<1 sentence overall career advice for this applicant regarding this job>"
+    }
+
+    APPLICANT PROFILE:
+    Name: ${applicant.name}
+    Country: ${applicant.country}
+    Skills: ${JSON.stringify(applicant.extracted?.skills)}
+    Experience: ${applicant.extracted?.experienceYears} years
+    Education: ${applicant.extracted?.education}
+    Previous Roles: ${JSON.stringify(applicant.extracted?.previousRoles)}
+    Certifications: ${JSON.stringify(applicant.extracted?.certifications)}
+    Languages: ${JSON.stringify(applicant.extracted?.languages)}
+
+    JOB DETAILS:
+    Title: ${job.title}
+    Company: ${job.company}
+    Location: ${job.location}
+    Country: ${job.country}
+    Requirements: ${JSON.stringify(job.extracted?.requirements)}
+    Skills Needed: ${JSON.stringify(job.extracted?.skills)}
+    Experience Required: ${job.extracted?.experienceYears} years
+    Nice to Have: ${JSON.stringify(job.extracted?.niceToHave)}
+  `;
+
+  const result = await model.generateContent(prompt);
+  const text = result.response.text().trim();
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    const cleaned = text.replace(/```json|```/g, "").trim();
+    return JSON.parse(cleaned);
+  }
+}
