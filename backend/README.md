@@ -31,3 +31,16 @@ creates a new user account
 | 200 | Account Created |
 | 400 | User Already Exists |
 ```
+
+## POST `api/login`
+
+login to an existing account
+
+** Request Body **
+
+```json
+{
+  "email": "email@test.com",
+  "password": "password123"
+}
+```
