@@ -44,3 +44,24 @@ login to an existing account
   "password": "password123"
 }
 ```
+
+## POST `api/jobs`
+
+EMPLOYER WILL POST A JOB
+** Request Body **
+
+```json
+{
+  "id": "string",
+  "employerId": "string",
+  "title": "string",
+  "company": "string",
+  "location": "string",
+  "country": "PH" | "ID",
+  "isOverseas": "boolean",
+  "rawText": "string",
+  "extracted": "JobExtracted | null",
+  "createdAt": "string",
+}
+
+```

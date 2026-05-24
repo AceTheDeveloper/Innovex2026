@@ -1,0 +1,22 @@
+[
+  {
+    "id": "740a737e-6023-4548-984c-4160a6684f10",
+    "employerId": null,
+    "title": "nurse",
+    "company": "Makati Medical Center",
+    "location": "Makati, Philippines",
+    "country": "PH",
+    "isOverseas": false,
+    "rawText": "We are looking for an experienced ICU nurse with 2 years of experience...",
+    "extracted": {
+      "requirements": [
+        "Extracted on Day 5"
+      ],
+      "niceToHave": [],
+      "experienceYears": 0,
+      "skills": [],
+      "salaryRange": null
+    },
+    "createdAt": "2026-05-24T05:29:52.623Z"
+  }
+]
