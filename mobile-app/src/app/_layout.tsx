@@ -1,15 +1,46 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { useEffect } from 'react';
+import { useFonts, Figtree_400Regular, Figtree_500Medium, Figtree_700Bold, Figtree_800ExtraBold } from '@expo-google-fonts/figtree'
+import { Stack, SplashScreen } from "expo-router";
+import "../global.css";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+export default function RootLayout() {
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const [fontsLoaded] = useFonts({
+    Figtree_400Regular,
+    Figtree_500Medium,
+    Figtree_700Bold,
+    Figtree_800ExtraBold,
+  });
+
+  useEffect(() => {
+      if (fontsLoaded) SplashScreen.hideAsync()
+    }, [fontsLoaded])
+
+  if (!fontsLoaded) return null
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+    <Stack>
+
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#F4F5F9",
+            padding: 20
+          }
+        }}
+      />
+
+      <Stack.Screen
+        name="(employer)"
+        options={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#F4F5F9",
+          }
+        }}
+      />
+
+    </Stack>);
 }
