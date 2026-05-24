@@ -1,0 +1,47 @@
+[
+  {
+    "id": "employer-001",
+    "name": "Maria Santos",
+    "email": "maria@makatimedical.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "employer",
+    "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "employer-002",
+    "name": "Budi Santoso",
+    "email": "budi@rsjakarta.co.id",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "employer",
+    "country": "ID",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-001",
+    "name": "Juan dela Cruz",
+    "email": "juan@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-002",
+    "name": "Ana Reyes",
+    "email": "ana@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "PH",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "applicant-003",
+    "name": "Siti Rahayu",
+    "email": "siti@email.com",
+    "password": "$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "role": "applicant",
+    "country": "ID",
+    "createdAt": "2026-01-01T00:00:00.000Z"
+  }
+]
