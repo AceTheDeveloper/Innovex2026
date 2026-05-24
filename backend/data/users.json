@@ -1,0 +1,20 @@
+[
+  {
+    "id": "uuid",
+    "name": "Arwin Clyde B. Simondac",
+    "email": "arbu.simondac.ui@phinmaed.com",
+    "password": "somepassword",
+    "role": "applicant",
+    "country": "PH",
+    "created_at": "2026-01-01"
+  },
+  {
+    "id": "789be9a1-b37c-43ff-9ca7-1c753d3184ab",
+    "name": "Arwin Clyde B. Simondac",
+    "email": "ghostwrexker@gmail.com",
+    "password": "$2b$10$649.0qLyc8AqC94xVxASBeMPSwrCEUeHAYxPDLUdKmjRH6fXSg9fm",
+    "role": "applicant",
+    "country": "PH",
+    "created_at": "2026-05-24"
+  }
+]
