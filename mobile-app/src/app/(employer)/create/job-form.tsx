@@ -5,10 +5,10 @@ import { createJobPosting } from '@/features/employer/api/jobApi'
 import { JobPostingForm, JOB_FORM_INITIAL_STATE } from '@/features/employer/types/employment'
 import PageHeader from '@/features/employer/components/PageHeader'
 import StepIndicator from '@/features/employer/components/StepIndicator'
-import RoleBasics from '@/features/employer/components/RoleBasics'
-import JobDetails from '@/features/employer/components/JobDetails'
-import Compensation from '@/features/employer/components/Compensation'
-import PublishJob from '@/features/employer/components/PublishJob'
+import RoleBasics from '@/features/employer/components/steps/RoleBasics'
+import JobDetails from '@/features/employer/components/steps/JobDetails'
+import Compensation from '@/features/employer/components/steps/Compensation'
+import PublishJob from '@/features/employer/components/steps/PublishJob'
 
 type StepContent = {
   heading: React.ReactNode
@@ -37,6 +37,7 @@ const JobForm = () => {
   return (
     <SafeAreaView className="flex-1 bg-navy-900" edges={["top"]}>
       <PageHeader
+        mode='back'
         title='POST A JOB'
         heading={STEP_CONTENT[step].heading}
         subheading={STEP_CONTENT[step].subheading}

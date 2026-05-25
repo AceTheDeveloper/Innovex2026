@@ -9,10 +9,10 @@ export const createJobPosting = async (form: JobPostingForm, employerId: string)
     formData.append('employerId', 'emp-001')
     formData.append('title', form.jobTitle)
     formData.append('company', 'Bold Hub') // replace with employer profile later
-    formData.append('city', form.city)
+    formData.append('location', [form.city, form.country].filter(Boolean).join(', '))
     formData.append('country', form.country)
     formData.append('isOverseas', String(false))
-    formData.append('text',  'aylabyu')
+    formData.append('text',  form.description)
 
     const response = await multipartClient.post("/api/jobs", formData)
 

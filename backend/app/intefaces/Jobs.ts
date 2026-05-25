@@ -4,7 +4,7 @@ export interface Job {
   title: string;
   company: string;
   location: string;
-  country: "PH" | "ID";
+  country: string;
   isOverseas: boolean;
   rawText: string;
   extracted: JobExtracted | null;

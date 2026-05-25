@@ -64,8 +64,8 @@ export async function POST(req: NextRequest) {
     const employerId = formData.get("employerId") as string;
     const title = formData.get("title") as string;
     const company = formData.get("company") as string;
-    const location = formData.get("location") as string;
-    const country = formData.get("country") as "PH" | "ID";
+    const location = formData.get("city") as string;
+    const country = formData.get("country") as string;
     const isOverseas = formData.get("isOverseas") === "true";
     const textInput = formData.get("text") as string | null;
     const file = formData.get("file") as File | null;
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!textInput && !file) {
+    if (!title && !file) {
       return NextResponse.json(
         { error: "Provide either a text description or a file" },
         { status: 400 },

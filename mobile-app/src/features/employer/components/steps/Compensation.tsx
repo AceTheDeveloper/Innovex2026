@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { DollarSign, Coins, MoveHorizontal, MessageSquareMore, GraduationCap, Globe, ChevronDown, Banknote, Clock } from 'lucide-react-native'
 import PickerModal from '@/components/PickerModal'
 import SelectionCardGroup from '@/features/employer/components/SelectionCardGroup'
-import { JobPostingForm, SalaryType, SALARY_TYPE_OPTIONS, PayPeriod, PAY_PERIOD_OPTIONS, CURRENCY_OPTIONS } from '../types/employment'
+import { JobPostingForm, SalaryType, SALARY_TYPE_OPTIONS, PayPeriod, PAY_PERIOD_OPTIONS, CURRENCY_OPTIONS } from '../../types/employment'
 
 interface CompensationProps {
   form: JobPostingForm

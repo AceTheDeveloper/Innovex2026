@@ -13,6 +13,7 @@ const CreateEntry = () => {
 
       {/* ── Header ── */}
       <PageHeader
+        mode='back'
         title="POST A JOB"
         heading={<>How do you want{"\n"}to{" "}<Text className="text-sky">get started?</Text></>}
         subheading="Choose your path — you can always edit later"
