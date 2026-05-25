@@ -75,12 +75,12 @@ module.exports = {
       },
 
       fontFamily: {
-        sans: ['Figtree_400Regular'],
-        medium: ['Figtree_500Medium'],
-        bold: ['Figtree_700Bold'],
-        extrabold: ['Figtree_800ExtraBold'],
+        'figtree': ['Figtree_400Regular'],
+        'figtree-medium': ['Figtree_500Medium'],
+        'figtree-bold': ['Figtree_700Bold'],
+        'figtree-extrabold': ['Figtree_800ExtraBold'],
       },
-
+      
       fontSize: {
         "2xs": ["9px",  { lineHeight: "13px" }],
         xs:    ["10px", { lineHeight: "14px" }],
@@ -93,15 +93,6 @@ module.exports = {
         "3xl": ["20px", { lineHeight: "28px" }],
         "4xl": ["22px", { lineHeight: "30px" }],
         "5xl": ["26px", { lineHeight: "34px" }],
-      },
-
-      fontWeight: {
-        light:    "300",
-        normal:   "400",
-        medium:   "500",
-        semibold: "600",
-        bold:     "700",
-        extrabold:"800",
       },
 
       borderRadius: {

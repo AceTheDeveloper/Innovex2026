@@ -5,11 +5,21 @@ const EmployerLayout = () => {
     <Stack>
       <Stack.Screen
         name="create/entry"
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#F4F5F9",
+          }
+         }}
       />
       <Stack.Screen
         name="create/job-form"
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#F4F5F9",
+          }
+        }}
       />
       <Stack.Screen
         name="create/job-upload"
