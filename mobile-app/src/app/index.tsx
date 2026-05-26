@@ -8,6 +8,9 @@ export default function Index() {
       <Link href={"/(employer)/(tabs)/home"}>
         <Text>List Job</Text>
       </Link>
+      <Link href={"/(applicant)/(tabs)/home"}>
+        <Text>Applicant</Text>
+      </Link>
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import PageHeader from '@/features/employer/components/PageHeader'
+import PageHeader from '@/components/PageHeader'
 import * as DocumentPicker from 'expo-document-picker'
 import { FileUp, Sparkles } from 'lucide-react-native'
 

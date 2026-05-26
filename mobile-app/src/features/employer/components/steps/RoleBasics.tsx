@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { BriefcaseBusiness, Building, Clock, FileText, GraduationCap, Globe, MapPin, ChevronDown } from 'lucide-react-native'
 import { JobPostingForm, EmploymentType, EMPLOYMENT_TYPE_OPTIONS } from '../../types/employment'
 import Input from '@/components/Input'
-import CityPickerModal from '@/components/CityPickerModal'
+import CityPickerModal from '@/components/modals/CityPickerModal'
 import SelectionCardGroup from '@/features/employer/components/SelectionCardGroup'
 
 interface RoleBasicsProps {

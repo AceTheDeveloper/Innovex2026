@@ -42,5 +42,15 @@ export default function RootLayout() {
         }}
       />
 
+      <Stack.Screen
+        name="(applicant)"
+        options={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#F4F5F9",
+          }
+        }}
+      />
+
     </Stack>);
 }

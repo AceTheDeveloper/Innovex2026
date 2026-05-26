@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Search, X, Sparkles } from 'lucide-react-native'
-import PageHeader from '@/features/employer/components/PageHeader'
+import PageHeader from '@/components/PageHeader'
 import JobPostingCard from '@/features/employer/components/JobPostingCard'
 
 const MOCK_POSTINGS = [

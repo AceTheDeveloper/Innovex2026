@@ -1,8 +1,8 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { ArrowLeft, Bell } from 'lucide-react-native'
+import { ArrowLeft, Bell, SquarePen } from 'lucide-react-native'
 import { useRouter } from 'expo-router'
 
-type PageHeaderMode = 'back' | 'dashboard'
+type PageHeaderMode = 'back' | 'dashboard' | 'profile'
 
 type PageHeaderProps = {
   mode?: PageHeaderMode
@@ -14,6 +14,7 @@ type PageHeaderProps = {
   hasNotification?: boolean
   onNotificationPress?: () => void
   onAvatarPress?: () => void
+  onEdit?: () => void
   // back mode
   showBack?: boolean
   children?: React.ReactNode
@@ -28,6 +29,7 @@ const PageHeader = ({
   hasNotification = false,
   onNotificationPress,
   onAvatarPress,
+  onEdit,
   children,
 }: PageHeaderProps) => {
   const router = useRouter()
@@ -64,7 +66,8 @@ const PageHeader = ({
             </Text>
           )}
         </>
-      ) : (
+
+      ) : mode === 'dashboard' ? (
         <View className="flex-row items-start justify-between">
           <View className="flex-1 pr-4">
             {title && (
@@ -102,6 +105,41 @@ const PageHeader = ({
               </Text>
             </TouchableOpacity>
           </View>
+        </View>
+
+      ) : (
+        // profile mode
+        <View className="w-full">
+          {/* Avatar */}
+          <View className='flex-row justify-between w-full'>
+              <TouchableOpacity
+                onPress={onAvatarPress}
+                className="w-20 h-20 rounded-full bg-navy-700 border border-sky items-center justify-center mb-4"
+              >
+                <Text className="font-figtree-extrabold text-5xl text-white">
+                  {avatarLabel}
+                </Text>
+              </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                onPress={onEdit}
+                className="items-center gap-1.5 bg-navy-800 border border-navy-700 rounded-full px-3 py-1.5"
+              >
+                <SquarePen size={12} color="#6FBFFF" />
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Heading */}
+          <Text className="font-figtree-extrabold text-4xl text-white leading-tight">
+            {heading}
+          </Text>
+
+          {subheading && (
+            <Text className="font-figtree text-sky text-sm mt-1">
+              {subheading}
+            </Text>
+          )}
         </View>
       )}
 
