@@ -229,3 +229,42 @@ export const JOB_FORM_INITIAL_STATE: JobPostingForm = {
   visibility: null,
   applicationDeadline: null,
 }
+
+// app/interfaces/Jobs.ts
+
+export interface JobExtracted {
+  requirements: string[]
+  niceToHave: string[]
+  experienceYears: number | null
+  skills: string[]
+  salaryRange: string | null
+}
+
+export interface Job {
+  id: string
+  employerId: string
+  title: string
+  company: string
+  reason: string
+  location: string
+  country: string
+  matchScore?: number | null 
+  isOverseas: boolean
+  rawText: string
+  extracted: JobExtracted
+  createdAt: string
+}
+
+export interface MatchedJob {
+  jobId: string
+  title: string
+  company: string
+  matchScore: number
+  reason: string
+  gaps: string[]
+  // merged from Job
+  location: string | null
+  country: string | null
+  isOverseas: boolean
+  extracted: JobExtracted | null
+}

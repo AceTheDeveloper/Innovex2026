@@ -6,7 +6,7 @@ import { ApplicantProfileForm } from '@/features/applicant/types/applicant'
 import CityPickerModal from '@/components/modals/CityPickerModal'
 
 
-type PersonalInfoForm = Pick<ApplicantProfileForm, 'name' | 'email' | 'city' | 'country' | 'isOpenToOverseas'>
+type PersonalInfoForm = Pick<ApplicantProfileForm, 'name' | 'email' | 'country' | 'isOpenToOverseas'>
 
 interface PersonalInfoModalProps {
   visible: boolean
@@ -69,24 +69,6 @@ const PersonalInfoModal = ({ visible, initialData, onClose, onSave }: PersonalIn
                 placeholderTextColor="#6B7BA0"
               />
 
-              {/* City + Country */}
-              <View className="mb-4">
-                <Text className="font-figtree-bold text-xs text-navy-950 mb-1">Location</Text>
-                <TouchableOpacity
-                  onPress={() => setCityPickerVisible(true)}
-                  className={`bg-navy-950 rounded-2xl px-4 py-3.5 flex-row items-center justify-between ${form.city ? '' : ''}`}
-                >
-                  <View>
-                    <Text className={`font-figtree text-sm ${form.city ? 'text-white' : 'text-[#6B7BA0]'}`}>
-                      {form.city || 'Select city'}
-                    </Text>
-                    {form.country && (
-                      <Text className="font-figtree text-xs text-[#6B7BA0] mt-0.5">{form.country}</Text>
-                    )}
-                  </View>
-                  <ChevronDown size={16} color="#6B7BA0" />
-                </TouchableOpacity>
-              </View>
 
               {/* Open to overseas */}
               <View className="bg-surface-bg border border-surface-border rounded-2xl px-4 py-3 flex-row items-center mb-4">

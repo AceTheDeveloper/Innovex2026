@@ -1,33 +1,38 @@
-
-
 import { useState } from 'react'
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import { useLocalSearchParams } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Plus } from 'lucide-react-native'
+import { GraduationCap, Pencil } from 'lucide-react-native'
 import PageHeader from '@/components/PageHeader'
-import ProfileItemCard from '@/features/applicant/components/cards/ProfileItemCard'
+import Card from '@/components/Card'
 import EducationModal from '@/features/applicant/components/modals/EducationModal'
-import { Education as EducationType } from '@/features/applicant/types/applicant' 
+import { useProfile } from '@/features/applicant/context/ProfileContext'
 
-const Experience = () => {
+const Education = () => {
+  const { profile, setProfile, setIsDirty } = useProfile()
+  const [showModal, setShowModal] = useState<boolean>(false)
 
-  const { education } = useLocalSearchParams();
-  const parsedEducation: EducationType[] = JSON.parse(education as string)
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const handleSave = async (value: string) => {
+    setProfile(prev => ({
+      ...prev,
+      extracted: { ...prev.extracted, education: value }
+    }))
+    setIsDirty(true);
+  }
 
   return (
     <>
-      <EducationModal 
+      <EducationModal
         visible={showModal}
         onClose={() => setShowModal(false)}
+        initialData={profile.extracted.education}
+        onSave={handleSave}
       />
 
-      <SafeAreaView className="flex-1 bg-navy-900" edges={["top"]}>
+      <SafeAreaView className="flex-1 bg-navy-900" edges={['top']}>
         <PageHeader
-          mode='back'
-          heading={"Education"}
-          subheading={"1 education record"}
+          mode="back"
+          heading="Education"
+          subheading={profile.extracted.education ? '1 education record' : 'No education added yet'}
         />
 
         <ScrollView
@@ -35,31 +40,37 @@ const Experience = () => {
           contentContainerClassName="px-4 pt-6 pb-10"
           showsVerticalScrollIndicator={false}
         >
-
-          <TouchableOpacity onPress={() => setShowModal(true)}
-            className="bg-white border border-dashed border-blue-muted rounded-2xl flex-row items-center justify-center gap-2 py-4"
-          >
-            <Plus size={20} color="#0D1F4E" />
-            <Text className="font-figtree-extrabold text-base text-navy-950">Add new education</Text>
-          </TouchableOpacity>
-
-          <View className='mt-3'>
-            {parsedEducation.map((education, index) => (
-              <ProfileItemCard
-                key={index}
-                title={education.degree}
-                subtitle={education.school}
-                meta={education.year}
-                onEdit={() => {}}
-                onDelete={() => {}}
-              />
-            ))}
-          </View>
-
+          {profile.extracted.education ? (
+            <Card>
+              <View className="flex-row items-start justify-between">
+                <View className="flex-row gap-3 items-center flex-1">
+                  <View className="w-10 h-10 rounded-xl bg-ai-light items-center justify-center flex-shrink-0">
+                    <GraduationCap size={18} color="#7F77DD" />
+                  </View>
+                  <Text className="font-figtree-bold text-sm text-navy-950 flex-1">
+                    {profile.extracted.education}
+                  </Text>
+                </View>
+                <TouchableOpacity onPress={() => setShowModal(true)} className="ml-3">
+                  <Pencil size={16} color="#9BA8C0" />
+                </TouchableOpacity>
+              </View>
+            </Card>
+          ) : (
+            <TouchableOpacity
+              onPress={() => setShowModal(true)}
+              className="bg-white border border-dashed border-blue-muted rounded-2xl flex-row items-center justify-center gap-2 py-4"
+            >
+              <GraduationCap size={20} color="#0D1F4E" />
+              <Text className="font-figtree-extrabold text-base text-navy-950">
+                Add education
+              </Text>
+            </TouchableOpacity>
+          )}
         </ScrollView>
       </SafeAreaView>
     </>
   )
 }
 
-export default Experience
+export default Education

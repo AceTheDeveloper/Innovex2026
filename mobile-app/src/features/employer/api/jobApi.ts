@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { JobPostingForm } from '@/features/employer/types/employment'
-import { multipartClient } from '@/utils/api'
+import { api } from '@/utils/api'
 
 export const createJobPosting = async (form: JobPostingForm, employerId: string) => {
   try {
@@ -14,7 +14,7 @@ export const createJobPosting = async (form: JobPostingForm, employerId: string)
     formData.append('isOverseas', String(false))
     formData.append('text',  form.description)
 
-    const response = await multipartClient.post("/api/jobs", formData)
+    const response = await api.post("/api/jobs", formData, { headers: { "Content-Type" : "multipart/form-data" } })
 
     return response.data
 

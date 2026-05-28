@@ -1,7 +1,9 @@
 import { Stack } from "expo-router"
+import { ProfileProvider } from "@/features/applicant/context/ProfileContext"
 
 const EmployerLayout = () => {
   return (
+    <ProfileProvider>
     <Stack>
 
       <Stack.Screen
@@ -45,6 +47,7 @@ const EmployerLayout = () => {
       />
       
     </Stack>
+  </ProfileProvider>
   )
 }
 
