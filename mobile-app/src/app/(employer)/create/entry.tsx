@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { ArrowLeft, ArrowUpFromLine, NotebookPen } from "lucide-react-native";
 import PageHeader from "@/components/PageHeader";
-import ChoiceCard from "@/features/employer/components/ChoiceCard";
+import ChoiceCard from "@/features/employer/components/cards/ChoiceCard";
 
 const CreateEntry = () => {
   const router = useRouter();

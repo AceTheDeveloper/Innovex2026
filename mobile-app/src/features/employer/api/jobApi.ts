@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { JobPostingForm } from '@/features/employer/types/employment'
-import { api } from '@/utils/api'
+import { Job, JobPostingForm } from '@/features/employer/types/employment'
+import  api  from '@/utils/api'
 
 export const createJobPosting = async (form: JobPostingForm, employerId: string) => {
   try {
@@ -25,4 +25,17 @@ export const createJobPosting = async (form: JobPostingForm, employerId: string)
     }
     throw err
   }
+}
+
+export const updateJob = async (job: Job) => {
+
+  const { data } = await api.patch(`/api/jobs?id=${job.id}`, { job });
+  console.log(data);
+  return data;
+
+} 
+
+export async function matchApplicantsToJob(jobId: string) {
+  const response = await api.get(`/api/match/employer?jobId=${jobId}`)
+  return response.data
 }

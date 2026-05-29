@@ -1,20 +1,24 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, TextInput, TouchableOpacity, Text, View, KeyboardAvoidingView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 type AddItemModalProps = {
   visible: boolean
+  defaultValue?: string
   title: string
   subtitle?: string
   placeholder: string
   inputHint?: string
   multiline?: boolean
+  keyboardType?: 'default' | 'numeric' | 'email-address' | 'phone-pad'
   onClose: () => void
   onAdd: (value: string) => void
+  children?: React.ReactNode
 }
 
-const AddItemModal = ({ visible, title, subtitle, inputHint, placeholder, multiline, onClose, onAdd }: AddItemModalProps) => {
+const AddItemModal = ({ visible, defaultValue, title, subtitle, inputHint, placeholder, multiline, keyboardType, onClose, onAdd, children }: AddItemModalProps) => {
   const [value, setValue] = useState('')
+  console.log(visible);
 
   const handleAdd = () => {
     if (!value.trim()) return
@@ -27,6 +31,12 @@ const AddItemModal = ({ visible, title, subtitle, inputHint, placeholder, multil
     setValue('')
     onClose()
   }
+
+  useEffect(() => {
+    if (visible) {
+      setValue(defaultValue ?? '')
+    }
+  }, [visible])
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={handleClose}>
@@ -59,6 +69,7 @@ const AddItemModal = ({ visible, title, subtitle, inputHint, placeholder, multil
             placeholderTextColor="#9BA8C0"
             autoFocus
             multiline={multiline}
+            keyboardType={keyboardType}
             className={`bg-navy-950 text-white font-figtree text-sm rounded-2xl px-4 py-4 ${multiline ? 'min-h-28' : ''}`}
             textAlignVertical={multiline ? 'top' : 'center'}
           />
@@ -66,6 +77,8 @@ const AddItemModal = ({ visible, title, subtitle, inputHint, placeholder, multil
           {inputHint && (
             <Text className="font-figtree text-xs text-surface-muted mt-2 mb-5">{inputHint}</Text>
           )}
+
+          {children}
 
           {/* Buttons */}
           <View className="flex-row gap-3 mt-4 mb-4">

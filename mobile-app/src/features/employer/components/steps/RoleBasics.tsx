@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Text, View, ScrollView, Switch, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Switch, TouchableOpacity, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BriefcaseBusiness, Building, Clock, FileText, GraduationCap, Globe, MapPin, ChevronDown } from 'lucide-react-native'
 import { JobPostingForm, EmploymentType, EMPLOYMENT_TYPE_OPTIONS } from '../../types/employment'
 import Input from '@/components/Input'
 import CityPickerModal from '@/components/modals/CityPickerModal'
-import SelectionCardGroup from '@/features/employer/components/SelectionCardGroup'
+import SelectionCardGroup from '@/features/employer/components/cards/SelectionCardGroup'
 
 interface RoleBasicsProps {
   form: JobPostingForm
@@ -31,11 +31,6 @@ const RoleBasics = ({ form, setForm, onNext }: RoleBasicsProps) => {
 
   return (
     <>
-      <CityPickerModal
-        visible={cityPickerVisible}
-        onClose={() => setCityPickerVisible(false)}
-        onSelect={(city, country) => setForm(prev => ({ ...prev, city, country }))}
-      />
 
       <ScrollView
         className="flex-1 bg-surface-bg rounded-t-3xl"
@@ -90,22 +85,29 @@ const RoleBasics = ({ form, setForm, onNext }: RoleBasicsProps) => {
             <Text className="font-figtree-medium">Job Location</Text>
           </View>
 
-          <TouchableOpacity
-            onPress={() => setCityPickerVisible(true)}
-            className={`bg-white border rounded-2xl px-4 py-3.5 flex-row items-center justify-between ${
-              form.city ? 'border-blue' : 'border-surface-border'
-            }`}
-          >
-            <View>
-              <Text className={`font-figtree-bold text-sm ${form.city ? 'text-navy-950' : 'text-surface-muted'}`}>
-                {form.city || 'Search city or town'}
-              </Text>
-              {form.country && (
-                <Text className="font-figtree text-xs text-surface-muted mt-0.5">{form.country}</Text>
-              )}
+          <View className="flex-row gap-2">
+            <TextInput
+              placeholder="City or town"
+              placeholderTextColor="#9BA8C0"
+              value={form.city}
+              onChangeText={(text) => setForm(prev => ({ ...prev, city: text }))}
+              className="flex-1 bg-white border border-surface-border rounded-2xl px-4 py-3.5 font-figtree-bold text-sm text-navy-950"
+            />
+
+            <View className="flex-row bg-white border border-surface-border rounded-2xl overflow-hidden">
+              {(['PH', 'ID'] as const).map((country) => (
+                <TouchableOpacity
+                  key={country}
+                  onPress={() => setForm(prev => ({ ...prev, country }))}
+                  className={`px-4 py-3.5 ${form.country === country ? 'bg-navy-950' : 'bg-white'}`}
+                >
+                  <Text className={`font-figtree-bold text-sm ${form.country === country ? 'text-surface-bg' : 'text-surface-muted'}`}>
+                    {country}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
-            <ChevronDown size={16} color={form.city ? "#4A7BE0" : "#9BA8C0"} />
-          </TouchableOpacity>
+          </View>
 
           <Text className="font-figtree text-xs text-surface-muted mt-1.5">
             Used to match candidates in this area

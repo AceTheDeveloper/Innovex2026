@@ -184,12 +184,12 @@ export interface JobPostingForm {
   employmentType: EmploymentType | null
   isRemote: boolean
   city: string
-  country: string
+  country: "PH" | "ID"
   // Step 2
   description: string
   responsibilities: string[]
   skills: string[]
-  experienceLevel: ExperienceLevel | null
+  experienceLevel: string | number | null
   educationRequirement: string | null
   // Step 3
   salaryType: SalaryType | null
@@ -212,7 +212,7 @@ export const JOB_FORM_INITIAL_STATE: JobPostingForm = {
   employmentType: null,
   isRemote: false,
   city: '',
-  country: '',
+  country: "PH",
   description: '',
   responsibilities: [],
   skills: [],

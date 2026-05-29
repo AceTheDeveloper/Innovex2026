@@ -42,7 +42,7 @@ const JobForm = () => {
         heading={STEP_CONTENT[step].heading}
         subheading={STEP_CONTENT[step].subheading}
       >
-        <StepIndicator currentStep={step} />
+        <StepIndicator key={step} currentStep={step} />
       </PageHeader>
 
       {step === 1 && <RoleBasics form={form} setForm={setForm} onNext={() => setStep(2)} />}

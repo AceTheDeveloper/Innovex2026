@@ -32,7 +32,7 @@ const JobCard = ({
   const initial = company.charAt(0).toUpperCase()
 
   return (
-    <View className={`bg-white rounded-2xl overflow-hidden ${isTopMatch ? 'border-2 border-blue' : 'border border-surface-border'}`}>
+    <View className={`bg-white rounded-2xl overflow-hidden mb-3 ${isTopMatch ? 'border-2 border-blue' : 'border border-surface-border'}`}>
 
       {/* TOP MATCH badge */}
       {isTopMatch && (

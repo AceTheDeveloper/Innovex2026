@@ -103,24 +103,24 @@ const Profile = () => {
           />
 
           {/* Skills */}
-          <Card className="mt-3">
-            <View className="flex-row items-center justify-between mb-3">
-              <View className="flex-row items-center gap-2">
-                <Wrench size={16} color="#4A7BE0" />
-                <Text className="font-figtree-bold text-sm text-navy-950">Skills</Text>
-              </View>
-              <TouchableOpacity onPress={() => setSkillsModal(true)}>
-                <Text className="font-figtree-bold text-sm text-blue">edit</Text>
-              </TouchableOpacity>
-            </View>
-            <View className="flex-row flex-wrap gap-2">
-              {profile.extracted.skills.map((skill) => (
-                <View key={skill} className="border border-success bg-success-bg rounded-full px-3 py-1.5">
-                  <Text className="font-figtree-bold text-xs text-success-dark">{skill}</Text>
+            <Card className="mt-3">
+              <View className="flex-row items-center justify-between mb-3">
+                <View className="flex-row items-center gap-2">
+                  <Wrench size={16} color="#4A7BE0" />
+                  <Text className="font-figtree-bold text-sm text-navy-950">Skills</Text>
                 </View>
-              ))}
-            </View>
-          </Card>
+                <TouchableOpacity onPress={() => setSkillsModal(true)}>
+                  <Text className="font-figtree-bold text-sm text-blue">edit</Text>
+                </TouchableOpacity>
+              </View>
+              <View className="flex-row flex-wrap gap-2">
+                {profile.extracted.skills.map((skill) => (
+                  <View key={skill} className="border border-success bg-success-bg rounded-full px-3 py-1.5">
+                    <Text className="font-figtree-bold text-xs text-success-dark">{skill}</Text>
+                  </View>
+                ))}
+              </View>
+            </Card>
 
           {/* Experience */}
             <Card className="mt-3">

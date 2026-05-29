@@ -7,7 +7,7 @@ export default function EmployerLayout() {
       tabBar={(props) => <EmployerTabBar {...(props as any)} />}
       screenOptions={{ headerShown: false }}
     >
-      <Tabs.Screen name="index"      options={{ title: "Home"       }} />
+      <Tabs.Screen name="home"      options={{ title: "Home"       }} />
       <Tabs.Screen name="posts"      options={{ title: "Posts"      }} />
       <Tabs.Screen name="applicants" options={{ title: "Applicants" }} />
       <Tabs.Screen name="profile"    options={{ title: "Profile"    }} />

@@ -1,22 +1,16 @@
 import { useState } from 'react'
-import { Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import { useRouter } from 'expo-router'
+import { Text, View, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Search, X, Sparkles } from 'lucide-react-native'
+import { useEmployerJobs } from '@/features/employer/hooks/useEmployerJobs'
 import PageHeader from '@/components/PageHeader'
-import JobPostingCard from '@/features/employer/components/JobPostingCard'
-
-const MOCK_POSTINGS = [
-  { id: '1', title: 'ICU Nurse',    department: 'Nursing',    employmentType: 'Full-time', status: 'active' as const, applicants: 24, aiMatched: 12, daysLeft: 8  },
-  { id: '2', title: 'ER Physician', department: 'Emergency',  employmentType: 'Full-time', status: 'active' as const, applicants: 8,  aiMatched: 3,  daysLeft: 15 },
-  { id: '3', title: 'Head Nurse',   department: 'Nursing',    employmentType: 'Full-time', status: 'draft'  as const },
-]
+import JobPostingCard from '@/features/employer/components/cards/JobPostingCard'
 
 const Home = () => {
-  const [search, setSearch] = useState('')
-
-  const filtered = MOCK_POSTINGS.filter(p =>
-    p.title.toLowerCase().includes(search.toLowerCase())
-  )
+  const router = useRouter();
+  const [search, setSearch] = useState('');
+  const { jobs, error, isLoading } = useEmployerJobs();
 
   return (
     <SafeAreaView className="flex-1 bg-navy-900" edges={["top"]}>
@@ -52,7 +46,7 @@ const Home = () => {
         {/* Stats row */}
         <View className="flex-row gap-3 mb-6">
           {[
-            { value: 4,  label: 'Active posts', dot: 'bg-success' },
+            { value: jobs.length,  label: 'Active posts', dot: 'bg-success' },
             { value: 38, label: 'Applicants',   dot: 'bg-ai'      },
             { value: 12, label: 'AI matched',   dot: 'bg-ai-dark' },
           ].map((stat) => (
@@ -81,9 +75,37 @@ const Home = () => {
           </TouchableOpacity>
         </View>
 
-        {filtered.map((posting) => (
-          <JobPostingCard key={posting.id} {...posting} />
-        ))}
+        {isLoading ? (
+          <View className="items-center py-10 gap-3">
+            <ActivityIndicator size="large" color="#0A1628" />
+            <Text className="font-figtree text-sm text-surface-muted">Matching jobs to your profile...</Text>
+          </View>
+        ) : jobs.length === 0 ? (
+          <View className="items-center py-10 gap-2">
+            <Sparkles size={28} color="#9BA8C0" />
+            <Text className="font-figtree-bold text-sm text-navy-950">No jobs yet</Text>
+            <Text className="font-figtree text-xs text-surface-muted text-center px-6">
+              Update and save your profile to see AI-matched roles here.
+            </Text>
+          </View>
+        ) : (
+          jobs.map((job, index) => (
+            <JobPostingCard
+              key={job.id}
+              title={job.title}
+              company={job.company}
+              location={job.location}
+              isOverseas={job.isOverseas}
+              salaryRange={job.extracted.salaryRange}
+              experienceYears={job.extracted.experienceYears}
+              onEdit={() => router.push({
+                pathname: "/(employer)/update/update-job",
+                params: { job: JSON.stringify(job) }
+              })}
+              onView={() => {}}
+            />
+          ))
+        )}
 
       </ScrollView>
     </SafeAreaView>

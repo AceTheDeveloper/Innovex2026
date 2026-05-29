@@ -27,7 +27,6 @@ export default function RootLayout() {
           headerShown: false,
           contentStyle: {
             backgroundColor: "#F4F5F9",
-            padding: 20
           }
         }}
       />

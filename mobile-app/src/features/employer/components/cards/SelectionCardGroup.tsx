@@ -26,7 +26,7 @@ interface SelectionCardGroupProps {
   icon: React.ReactNode;
   groupLabel: string;
   options: SelectionCardOption[];
-  selected: string | null;
+  selected: string | null | undefined;
   onChange: (value: string) => void;
   columns?: 1 | 2;
   size?: "sm" | "md" | "lg";

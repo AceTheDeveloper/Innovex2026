@@ -232,14 +232,9 @@ const PublishJob = ({ form, setForm, onNext, onBack, onGoToStep }: PublishJobPro
         title={form.jobTitle || 'Untitled role'}
         company="Your Company"
         location={[form.city, form.country].filter(Boolean).join(', ')}
-        employmentType={form.employmentType || ''}
-        isRemote={form.isRemote}
-        experienceLevel={form.experienceLevel}
-        salaryMin={form.salaryMin}
-        salaryMax={form.salaryMax}
-        currency={form.currency || 'USD'}
-        payPeriod={form.payPeriod}
-        aiMatched
+        isOverseas={form.isRemote}
+        experienceYears={form.experienceLevel}
+        salaryRange={`${form.salaryMin} - ${form.salaryMax}`}
       />
 
       <SafeAreaView edges={["bottom"]} className="bg-surface-bg pt-2 pb-2 mt-4">
