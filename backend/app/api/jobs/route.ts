@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     const employerId = formData.get("employerId") as string;
     const title = formData.get("title") as string;
     const company = formData.get("company") as string;
-    const location = formData.get("city") as string;
+    const location = formData.get("location") as string;
     const country = formData.get("country") as string;
     const isOverseas = formData.get("isOverseas") === "true";
     const textInput = formData.get("text") as string | null;
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!title && !file) {
+    if (!textInput && !file) {
       return NextResponse.json(
         { error: "Provide either a text description or a file" },
         { status: 400 },
@@ -126,8 +126,13 @@ export async function GET(req: NextRequest) {
     const country = searchParams.get("country") as "PH" | "ID" | null;
     const isOverseas = searchParams.get("isOverseas");
     const search = searchParams.get("search");
+    const employerId = searchParams.get("employerId");
 
     let jobs = readJobs();
+
+    if (employerId) {
+      jobs = jobs.filter((j) => j.employerId === employerId);
+    }
 
     // Filter by country
     if (country) {
@@ -154,6 +159,41 @@ export async function GET(req: NextRequest) {
       total: jobs.length,
       jobs,
     });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { searchParams } = new URL(req.url)
+    const jobId = searchParams.get("id");
+    const { job } = body;
+
+    if (!jobId) {
+      return NextResponse.json({ error: "Job ID is required" }, { status: 400 });
+    }
+
+    const jobs = readJobs();
+    const index = jobs.findIndex((j) => j.id === jobId);
+
+    if (index === -1) {
+      return NextResponse.json({ error: "Job not found" }, { status: 404 });
+    }
+
+    jobs[index] = {
+      ...jobs[index],
+      ...job,
+      extracted: {
+        ...jobs[index].extracted,
+        ...(job.extracted ?? {}),
+      },
+    };
+
+    writeJobs(jobs);
+
+    return NextResponse.json({ message: "Job updated successfully", job: jobs[index] }, { status: 200 });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }

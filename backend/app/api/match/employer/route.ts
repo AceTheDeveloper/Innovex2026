@@ -49,6 +49,17 @@ export async function GET(req: NextRequest) {
 
     const topMatches = await matchApplicantsToJob(job, filteredApplicants);
 
+    const enriched = topMatches.map((match) => {
+      const applicant = applicants.find((a) => a.id === match.applicantId);
+      return {
+        ...match,
+        jobId: job.id,
+        country: applicant?.country ?? null,
+        isOpenToOverseas: applicant?.isOpenToOverseas ?? false,
+        experienceYears: applicant?.extracted?.experienceYears ?? null,
+      };
+    });
+
     return NextResponse.json({
       job: {
         id: job.id,
@@ -56,9 +67,10 @@ export async function GET(req: NextRequest) {
         company: job.company,
       },
       totalApplicants: applicants.length,
-      topMatches,
+      topMatches: enriched,
     });
   } catch (err: any) {
+    console.log(err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

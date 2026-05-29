@@ -5,5 +5,5 @@ export interface User {
   password: string;
   role: string;
   country: string;
-  created_at: string;
+  createdAt: string;
 }

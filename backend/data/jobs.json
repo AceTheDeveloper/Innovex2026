@@ -2,11 +2,11 @@
   {
     "id": "job-001",
     "employerId": "employer-001",
-    "title": "ICU Nurse",
+    "title": "bench press",
     "company": "Makati Medical Center",
     "location": "Makati, Philippines",
     "country": "PH",
-    "isOverseas": false,
+    "isOverseas": true,
     "rawText": "We are looking for a Registered Nurse with at least 2 years of ICU experience. Must be BLS and ACLS certified. Experience with patient monitoring systems is required. Knowledge of EMR systems is a plus. Salary range: PHP 35,000 - 45,000 per month.",
     "extracted": {
       "requirements": [
@@ -206,5 +206,23 @@
       "salaryRange": "IDR 8,000,000 - 12,000,000 per bulan"
     },
     "createdAt": "2026-05-24T11:17:46.389Z"
+  },
+  {
+    "id": "e1e89e4f-fdb4-4f9d-aabe-59746574319b",
+    "employerId": "emp-001",
+    "title": "ah basta",
+    "company": "Bold Hub",
+    "location": "Iloilo City, Philippines",
+    "country": "Philippines",
+    "isOverseas": false,
+    "rawText": "mapa tattoo sa buli",
+    "extracted": {
+      "requirements": [],
+      "niceToHave": [],
+      "experienceYears": 0,
+      "skills": [],
+      "salaryRange": null
+    },
+    "createdAt": "2026-05-25T09:42:01.980Z"
   }
 ]

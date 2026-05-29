@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     id = generateUUID();
   }
 
-  const created_at = new Date().toISOString().split("T")[0];
+  const createdAt = new Date().toISOString().split("T")[0];
 
   const userObject: User = {
     id,
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     password: hashedPassword,
     role,
     country,
-    created_at,
+    createdAt,
   };
 
   users.push(userObject);
