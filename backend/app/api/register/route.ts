@@ -42,5 +42,15 @@ export async function POST(req: NextRequest) {
   const filePath = path.join(process.cwd(), "data/users.json");
   fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
 
-  return NextResponse.json({ message: "Account Created" }, { status: 200 });
+  return NextResponse.json({ 
+    message: "Account Created",
+    user: {
+      id,
+      name,
+      email,
+      role,
+      country,
+      createdAt,
+    }
+  }, { status: 200 });
 }

@@ -18,3 +18,13 @@ export interface ApplicantExtracted {
   certifications: string[];
   languages: string[];
 }
+
+export interface ApplicantMatch {
+  applicantId: string
+  jobId: string
+  title: string
+  company: string
+  matchScore: number
+  reason: string
+  gaps: string[]
+}

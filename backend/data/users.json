@@ -43,5 +43,14 @@
     "role": "applicant",
     "country": "ID",
     "createdAt": "2026-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "1cbba5e6-7262-48ef-914e-b5ed99c07e8f",
+    "name": "Maverick Barrientos",
+    "email": "maverickjadebarrientos@gmail.com",
+    "password": "$2b$10$dcljtMzVe93xq822WZ8.VumLC9CCLSSDx.PpMendAvDvM.wqO2UBm",
+    "role": "applicant",
+    "country": "PH",
+    "createdAt": "2026-05-30"
   }
 ]

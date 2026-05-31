@@ -10,6 +10,22 @@ const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash",
 });
 
+function safeParseJSON(text: string) {
+  let cleaned = text.replace(/```json|```/g, "").trim();
+  
+  const arrayMatch = cleaned.match(/\[[\s\S]*\]/);
+  if (arrayMatch) cleaned = arrayMatch[0];
+
+  try {
+    return JSON.parse(cleaned);
+  } catch {
+    cleaned = cleaned
+      .replace(/,\s*]/g, "]")
+      .replace(/,\s*}/g, "}");
+    return JSON.parse(cleaned);
+  }
+}
+
 export async function extractJobData(rawText: string): Promise<JobExtracted> {
   const prompt = `
     You are an expert HR analyst. Extract structured information from the job description below.
@@ -32,13 +48,7 @@ export async function extractJobData(rawText: string): Promise<JobExtracted> {
   const result = await model.generateContent(prompt);
   const text = result.response.text().trim();
 
-  try {
-    return JSON.parse(text) as JobExtracted;
-  } catch {
-    // Clean up if Gemini adds accidental backticks
-    const cleaned = text.replace(/```json|```/g, "").trim();
-    return JSON.parse(cleaned) as JobExtracted;
-  }
+  return safeParseJSON(text)
 }
 
 export async function extractResumeData(
@@ -66,12 +76,7 @@ export async function extractResumeData(
   const result = await model.generateContent(prompt);
   const text = result.response.text().trim();
 
-  try {
-    return JSON.parse(text) as ApplicantExtracted;
-  } catch {
-    const cleaned = text.replace(/```json|```/g, "").trim();
-    return JSON.parse(cleaned) as ApplicantExtracted;
-  }
+  return safeParseJSON(text)
 }
 
 export async function matchApplicantsToJob(
@@ -129,12 +134,7 @@ export async function matchApplicantsToJob(
   const result = await model.generateContent(prompt);
   const text = result.response.text().trim();
 
-  try {
-    return JSON.parse(text);
-  } catch {
-    const cleaned = text.replace(/```json|```/g, "").trim();
-    return JSON.parse(cleaned);
-  }
+  return safeParseJSON(text)
 }
 
 export async function matchJobsToApplicant(
@@ -194,12 +194,7 @@ export async function matchJobsToApplicant(
   const result = await model.generateContent(prompt);
   const text = result.response.text().trim();
 
-  try {
-    return JSON.parse(text);
-  } catch {
-    const cleaned = text.replace(/```json|```/g, "").trim();
-    return JSON.parse(cleaned);
-  }
+  return safeParseJSON(text)
 }
 
 export async function analyzeGaps(
@@ -258,10 +253,5 @@ export async function analyzeGaps(
   const result = await model.generateContent(prompt);
   const text = result.response.text().trim();
 
-  try {
-    return JSON.parse(text);
-  } catch {
-    const cleaned = text.replace(/```json|```/g, "").trim();
-    return JSON.parse(cleaned);
-  }
+  safeParseJSON(text)
 }

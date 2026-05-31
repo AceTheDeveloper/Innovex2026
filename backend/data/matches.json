@@ -1,0 +1,125 @@
+[
+  {
+    "applicantId": "profile-001",
+    "name": "Juan dela Cruz",
+    "matchScore": 85,
+    "reason": "This applicant is an excellent match due to direct experience as an 'ICU Nurse' for 3 years, fulfilling the critical ICU experience requirement. They possess relevant skills like 'ICU care,' 'ACLS,' 'BLS,' and 'patient monitoring,' alongside a 'PRC License' and EMR systems knowledge. Although their education is a BSIT, their professional experience and license are highly relevant.",
+    "gaps": [
+      "BLS certified (certification)",
+      "Bachelor of Science in Nursing (education)"
+    ],
+    "type": "employer",
+    "jobId": "job-001",
+    "title": "bench press",
+    "company": "Makati Medical Center",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  },
+  {
+    "applicantId": "e5a5a75d-3fe5-4c25-81c1-948659a288a2",
+    "name": "Juan dela Cruz",
+    "matchScore": 75,
+    "reason": "This applicant is a Registered Nurse with a Bachelor of Science in Nursing, holding both BLS and ACLS certifications and 3 years of experience. They are proficient in patient monitoring and EMR systems. However, a significant gap exists as they do not explicitly list '2 years ICU experience' or 'ICU care' as a skill, which are core requirements for this specific role.",
+    "gaps": [
+      "2 years ICU experience",
+      "ICU care"
+    ],
+    "type": "employer",
+    "jobId": "job-001",
+    "title": "bench press",
+    "company": "Makati Medical Center",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  },
+  {
+    "jobId": "e46d5363-1294-4798-ba9f-66973b4f96bb",
+    "title": "ICU Nurse",
+    "company": "Makati Medical Center",
+    "matchScore": 112,
+    "reason": "Juan is an exceptional fit for this local ICU Nurse position. He possesses all required certifications (BLS, ACLS, PRC License), exceeds the experience minimum with 3 years in ICU, and has direct experience with patient monitoring and EMR systems.",
+    "gaps": [
+      "BSN Degree (Primary education is BSIT, not BSN)"
+    ],
+    "type": "applicant",
+    "applicantId": "profile-001",
+    "name": "Juan dela Cruz",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  },
+  {
+    "jobId": "job-001",
+    "title": "bench press",
+    "company": "Makati Medical Center",
+    "matchScore": 97,
+    "reason": "Despite the unusual job title, Juan's profile strongly aligns with the requirements for this ICU-focused nursing role. He has extensive ICU experience (3 years), BLS/ACLS certifications, and skills in patient monitoring and EMR systems, exceeding the minimum experience required.",
+    "gaps": [
+      "BSN Degree (Primary education is BSIT, not BSN)",
+      "Clarification on job title 'bench press'"
+    ],
+    "type": "applicant",
+    "applicantId": "profile-001",
+    "name": "Juan dela Cruz",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  },
+  {
+    "jobId": "job-002",
+    "title": "Staff Nurse - Saudi Arabia",
+    "company": "Makati Medical Center (OFW Deployment)",
+    "matchScore": 75,
+    "reason": "Juan is a strong candidate for this overseas Staff Nurse position, meeting all explicit requirements including being a Registered Nurse with 3 years of hospital experience and a valid PRC license. His comprehensive nursing skills readily transfer to the general nursing and patient care duties.",
+    "gaps": [
+      "NCLEX certification",
+      "HAAD certification",
+      "BSN Degree (Primary education is BSIT, not BSN)"
+    ],
+    "type": "applicant",
+    "applicantId": "profile-001",
+    "name": "Juan dela Cruz",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  },
+  {
+    "jobId": "88644f33-d8e9-44b3-8406-a1f5705035bb",
+    "title": "Staff Nurse - Saudi Arabia",
+    "company": "Makati Medical Center OFW Deployment",
+    "matchScore": 50,
+    "reason": "Juan meets the core requirement of being a Licensed Registered Nurse with 3 years of experience, making him a suitable candidate for this overseas Staff Nurse role. His specialized nursing skills like ICU care and IV therapy support general patient care duties.",
+    "gaps": [
+      "NCLEX certification",
+      "HAAD certification",
+      "BSN Degree (Primary education is BSIT, not BSN)"
+    ],
+    "type": "applicant",
+    "applicantId": "profile-001",
+    "name": "Juan dela Cruz",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  },
+  {
+    "jobId": "job-004",
+    "title": "Software Engineer",
+    "company": "TechPH Inc.",
+    "matchScore": 25,
+    "reason": "While Juan holds a BSIT degree and has a 'React native' skill, his primary professional experience is in nursing. He lacks the specific web development skills (Node.js, TypeScript, PostgreSQL, REST APIs) and direct software engineering experience required for this role.",
+    "gaps": [
+      "Node.js",
+      "TypeScript",
+      "REST APIs",
+      "PostgreSQL",
+      "Dedicated software engineering experience beyond React Native"
+    ],
+    "type": "applicant",
+    "applicantId": "profile-001",
+    "name": "Juan dela Cruz",
+    "country": "PH",
+    "isOpenToOverseas": true,
+    "experienceYears": 3
+  }
+]

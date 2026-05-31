@@ -182,5 +182,23 @@
       ]
     },
     "created_at": "2026-05-24T11:19:33.991Z"
+  },
+  {
+    "id": "1cbba5e6-7262-48ef-914e-b5ed99c07e8f",
+    "userID": "1cbba5e6-7262-48ef-914e-b5ed99c07e8f",
+    "name": "Maverick Barrientos",
+    "email": "maverickjadebarrientos@gmail.com",
+    "country": "PH",
+    "isOpenToOverseas": false,
+    "rawText": "",
+    "extracted": {
+      "skills": [],
+      "experienceYears": null,
+      "education": null,
+      "previousRoles": [],
+      "certifications": [],
+      "languages": []
+    },
+    "created_at": "2026-05-30"
   }
 ]

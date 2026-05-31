@@ -4,6 +4,7 @@ import path from "path";
 import { Job } from "@/app/intefaces/Jobs";
 import { Applicants } from "@/app/intefaces/Applicants";
 import { matchApplicantsToJob } from "@/app/lib/gemini";
+import { readMatches, upsertMatchesForJob, StoredMatch } from "@/app/lib/matchStore";
 
 const JOBS_PATH = path.join(process.cwd(), "data", "jobs.json");
 const APPLICANTS_PATH = path.join(process.cwd(), "data", "applicants.json");
@@ -24,48 +25,52 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "jobId is required" }, { status: 400 });
     }
 
+    // serve from cache
+    const cached = readMatches().filter(
+      m => m.type === "employer" && m.jobId === jobId
+    );
+    if (cached.length > 0) {
+      return NextResponse.json({ topMatches: cached });
+    }
+
+    // cache miss — run Gemini
     const jobs = readJSON<Job>(JOBS_PATH);
     const job = jobs.find((j) => j.id === jobId);
-
     if (!job) {
       return NextResponse.json({ error: "Job not found" }, { status: 404 });
     }
 
     const applicants = readJSON<Applicants>(APPLICANTS_PATH);
-
     if (applicants.length === 0) {
-      return NextResponse.json(
-        { error: "No applicants found" },
-        { status: 404 },
-      );
+      return NextResponse.json({ error: "No applicants found" }, { status: 404 });
     }
 
     let filteredApplicants = applicants;
     if (job.isOverseas) {
-      filteredApplicants = applicants.filter(
-        (a) => a.isOpenToOverseas === true,
-      );
+      filteredApplicants = applicants.filter((a) => a.isOpenToOverseas === true);
     }
 
     const topMatches = await matchApplicantsToJob(job, filteredApplicants);
 
-    const enriched = topMatches.map((match) => {
-      const applicant = applicants.find((a) => a.id === match.applicantId);
-      return {
-        ...match,
-        jobId: job.id,
-        country: applicant?.country ?? null,
-        isOpenToOverseas: applicant?.isOpenToOverseas ?? false,
-        experienceYears: applicant?.extracted?.experienceYears ?? null,
-      };
-    });
+   const enriched: StoredMatch[] = topMatches.map((match) => {
+    const applicant = applicants.find(a => a.id === match.applicantId)
+    return {
+      ...match,
+      type: "employer" as const,
+      jobId: job.id,
+      title: job.title,
+      company: job.company,
+      name: applicant?.name ?? '',
+      country: applicant?.country ?? null,
+      isOpenToOverseas: applicant?.isOpenToOverseas ?? false,
+      experienceYears: applicant?.extracted?.experienceYears ?? null,
+    }
+  })
+
+    upsertMatchesForJob(jobId, enriched);
 
     return NextResponse.json({
-      job: {
-        id: job.id,
-        title: job.title,
-        company: job.company,
-      },
+      job: { id: job.id, title: job.title, company: job.company },
       totalApplicants: applicants.length,
       topMatches: enriched,
     });
