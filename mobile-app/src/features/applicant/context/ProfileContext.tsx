@@ -87,6 +87,23 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     }
   }, [profile]);
 
+  const fetchMatches = useCallback(async () => {
+    try {
+      setIsMatching(true)
+      const { topMatches } = await refreshMatches(DEV_PROFILE_ID)
+      setMatchedJobs(topMatches)
+    } catch (err) {
+      console.error("fetchMatches error:", err)
+    } finally {
+      setIsMatching(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    refetchProfile()
+    fetchMatches()
+  }, [refetchProfile, fetchMatches])
+
   return (
     <ProfileContext.Provider
       value={{

@@ -11,7 +11,7 @@ interface Pill {
 interface ChoiceCardProps {
   title: string;
   description: string;
-  pills: Pill[];
+  pills?: Pill[];
   recommended?: boolean;
   icon: React.ReactNode;
   onPress?: () => void;
@@ -94,11 +94,13 @@ export default function ChoiceCard({
         </View>
 
         {/* Pills */}
-        <View className="flex-row flex-wrap gap-1.5">
-          {pills.map((pill) => (
-            <Pill key={pill.label} {...pill} />
-          ))}
-        </View>
+        {pills && (
+          <View className="flex-row flex-wrap gap-1.5">
+            {pills.map((pill) => (
+              <Pill key={pill.label} {...pill} />
+            ))}
+          </View>
+        )}
 
       </TouchableOpacity>
     </View>

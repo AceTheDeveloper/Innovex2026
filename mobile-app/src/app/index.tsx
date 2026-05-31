@@ -149,7 +149,7 @@ export default function Index() {
         <View className="items-center mt-8">
           <Text className="font-figtree text-sm text-surface-muted">
             New to JobBridge?{" "}
-            <Link href="/">
+            <Link href={'/signup'}>
               <Text className="font-figtree-bold text-blue">Create an account →</Text>
             </Link>
           </Text>

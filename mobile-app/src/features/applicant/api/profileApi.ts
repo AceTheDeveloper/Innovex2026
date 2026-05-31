@@ -4,6 +4,14 @@
 import api from "@/utils/api";
 import { ApplicantProfileForm } from "@/features/applicant/types/applicant";
 
+// ── Create profile ────────────────────────────────────────────────────────────
+export async function createProfile(
+  profile: Omit<ApplicantProfileForm, 'id' | 'createdAt'>
+): Promise<ApplicantProfileForm> {
+  const { data } = await api.post(`/api/applicants`, profile);
+  return data.applicant;
+}
+
 // ── Fetch profile ─────────────────────────────────────────────────────────────
 export async function fetchProfile(applicantId: string): Promise<ApplicantProfileForm> {
   const { data } = await api.get(`/api/applicants/${applicantId}`);

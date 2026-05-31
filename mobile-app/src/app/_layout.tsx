@@ -32,6 +32,16 @@ export default function RootLayout() {
       />
 
       <Stack.Screen
+        name="signup"
+        options={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#F4F5F9",
+          }
+        }}
+      />
+
+      <Stack.Screen
         name="(employer)"
         options={{
           headerShown: false,

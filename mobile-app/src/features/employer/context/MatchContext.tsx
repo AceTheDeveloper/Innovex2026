@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from 'react'
 import { matchApplicantsToJob } from '../api/jobApi'
-import { Job } from '../types/employment'
+import { fetchMatchesForJob as apiFetchMatches, refreshMatchesForJob as apiRefreshMatches } from '../api/matchApi'
 
 interface Match {
   applicantId: string
@@ -31,11 +31,11 @@ export function MatchProvider({ children }: { children: ReactNode }) {
   const [matchError, setMatchError] = useState('')
 
   const fetchMatchesForJob = async (jobId: string) => {
-    if (fetchedJobIds.has(jobId)) return  // already fetched, skip
+    if (fetchedJobIds.has(jobId)) return
     setIsMatching(true)
     setMatchError('')
     try {
-      const data = await matchApplicantsToJob(jobId)
+      const data = await apiFetchMatches(jobId)
       setTopMatches(prev => [...prev, ...data.topMatches])
       setFetchedJobIds(prev => new Set(prev).add(jobId))
     } catch (err: unknown) {
@@ -49,7 +49,7 @@ export function MatchProvider({ children }: { children: ReactNode }) {
     setIsMatching(true)
     setMatchError('')
     try {
-      const data = await matchApplicantsToJob(jobId)
+      const data = await apiRefreshMatches(jobId)
       setTopMatches(prev => [
         ...prev.filter(m => m.jobId !== jobId),
         ...data.topMatches
